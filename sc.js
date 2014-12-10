@@ -1,4 +1,9 @@
 
+/* 
+Function Initialize: 
+	Called on page load to initialize Program Counter, input cards, output cards,
+	and highlight images.
+*/
 function initialize(){
 	document.CPU.PC.value='00';
 	document.images["M00"].src = "highlight.gif";
@@ -7,15 +12,18 @@ function initialize(){
 	outCardNo="01";
 };
 
+/* 
+Function Cycle: 
+	The main CPU cycle, including fetch(), decode(), and execute()
+	Parameters:
+		N: The number of memory cells to cycle through. If the user presses step, N = 1.
+			If the user presses Run, N = 100.
+*/
 function cycle(N){
 	for (i=1; i<=N; i++){
 		if (fetch()) break;
 		if (decode()) break;
-		if (document.CPU.Exec[0].checked){
-			if (signExecute()) break;
-		} else {
-			if (tensExecute()) break;
-		};
+		if (execute()) break;
 	};
 };
 
@@ -44,7 +52,7 @@ function decode(){
 	return 0;
 };
 
-function signExecute(){
+function execute(){
 	if(opCode=="0"){return INP(address);};
 	if(opCode=="1"){return OUT(address);};
 	if(opCode=="2"){return ADD(address);};
@@ -53,22 +61,6 @@ function signExecute(){
 	if(opCode=="5"){return STA(address);};
 	if(opCode=="6"){return JMP(address);};
 	if(opCode=="7"){return TAC(address);};
-	if(opCode=="8"){return SHF(address);};
-	if(opCode=="9"){return HLT(address);};
-	return 1;
-};
-
-function tensExecute(){
-	opCode = IR.charAt(1);
-	address = IR.substring(2,4);
-	if(opCode=="0"){return INP(address);};
-	if(opCode=="1"){return OUT(address);};
-	if(opCode=="2"){return ADD10(address);};
-	if(opCode=="3"){return SUB10(address);};
-	if(opCode=="4"){return LDA(address);};
-	if(opCode=="5"){return STA(address);};
-	if(opCode=="6"){return JMP(address);};
-	if(opCode=="7"){return TAC10(address);};
 	if(opCode=="8"){return SHF(address);};
 	if(opCode=="9"){return HLT(address);};
 	return 1;
