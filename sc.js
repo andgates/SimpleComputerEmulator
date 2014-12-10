@@ -27,16 +27,24 @@ function cycle(N){
 	};
 };
 
+/* 
+Function Fetch: 
+	Fetches the value of the memory cell pointed to by PC and inserts it into the
+	instruction register. Increments the program counter.
+*/
 function fetch(){
+	// Insert the value in memory cell pointed to by PC into IR
 	IR = document.Memory["M"+document.CPU.PC.value].value;
+	// Error checking
 	if (IR.length <4) {
-		alert('Execution Halted: Memory location being fetched is empty.');
+		alert('Error: Memory cell being fetched is empty.');
 		return 1;
 	};
 	if (IR<=0) {
-		alert('Execution Halted: Memory location being fetched is <= zero.');
+		alert('Error: Memory cell being fetched is less than zero.');
 		return 1;
 	};
+	// Update the IR input box in index.html
 	document.CPU.IR.value = IR;
 	document.images["M"+document.CPU.PC.value].src = "blank.gif";
 	PC = document.CPU.PC.value;
@@ -48,31 +56,31 @@ function fetch(){
 
 function decode(){
 	opCode = IR.charAt(1);
-	address = IR.substring(2,4);
+	operand = IR.substring(2,4);
 	return 0;
 };
 
 function execute(){
-	if(opCode=="0"){return INP(address);};
-	if(opCode=="1"){return OUT(address);};
-	if(opCode=="2"){return ADD(address);};
-	if(opCode=="3"){return SUB(address);};
-	if(opCode=="4"){return LDA(address);};
-	if(opCode=="5"){return STA(address);};
-	if(opCode=="6"){return JMP(address);};
-	if(opCode=="7"){return TAC(address);};
-	if(opCode=="8"){return SHF(address);};
-	if(opCode=="9"){return HLT(address);};
+	if(opCode=="0"){return INP(operand);};
+	if(opCode=="1"){return OUT(operand);};
+	if(opCode=="2"){return ADD(operand);};
+	if(opCode=="3"){return SUB(operand);};
+	if(opCode=="4"){return LDA(operand);};
+	if(opCode=="5"){return STA(operand);};
+	if(opCode=="6"){return JMP(operand);};
+	if(opCode=="7"){return TAC(operand);};
+	if(opCode=="8"){return SHF(operand);};
+	if(opCode=="9"){return HLT(operand);};
 	return 1;
 };
 
-function INP(address){
+function INP(operand){
 	In = document.Input["I"+inCardNo].value;
 	if (In.length <4) {
 		alert('Execution Halted: Input card is empty.');
 		return 1;
 	};
-	document.Memory["M"+address].value = In;
+	document.Memory["M"+operand].value = In;
 	document.images["I"+inCardNo].src = "blank.gif";
 	inCardNo++;
 	inCardNo = (inCardNo.toString().length==1? "0"+inCardNo: inCardNo.toString());
@@ -80,16 +88,16 @@ function INP(address){
 	return 0;
 };
 
-function OUT(address){
-	document.Output["Out"+outCardNo].value = document.Memory["M"+address].value;
+function OUT(operand){
+	document.Output["Out"+outCardNo].value = document.Memory["M"+operand].value;
 	outCardNo++;
 	outCardNo = (outCardNo.toString().length==1? "0"+outCardNo: outCardNo.toString());
 	return 0;
 };
 
-function ADD(address){
+function ADD(operand){
 	// subtract zero to force type conversion.
-	sum = (document.CPU.AC.value-0) + (document.Memory["M"+address].value-0);
+	sum = (document.CPU.AC.value-0) + (document.Memory["M"+operand].value-0);
 	if(sum>999){
 		document.CPU.CARRY.value = "1";
 		sum = sum.toString().substring(1,4) - 999;
@@ -105,19 +113,8 @@ function ADD(address){
 	return 0;
 };
 
-function ADD10(address){
-	// subtract zero to force type conversion.
-	sum = (document.CPU.AC.value-0) + (document.Memory["M"+address].value-0);
-	if(sum>999){
-		document.CPU.CARRY.value = "1";
-		sum = sum.toString().substring(1,4);
-	};
-	document.CPU.AC.value = stripNpad(sum.toString());
-	return 0;
-};
-
-function SUB(address){
-	diff = document.CPU.AC.value - document.Memory["M"+address].value;
+function SUB(operand){
+	diff = document.CPU.AC.value - document.Memory["M"+operand].value;
 	if(diff>999){
 		document.CPU.CARRY.value = "1";
 		diff = diff.toString().substring(1,4) - 999;
@@ -133,48 +130,29 @@ function SUB(address){
 	return 0;
 };
 
-function SUB10(address){
-	diff = (document.CPU.AC.value - 0) + (1000 - document.Memory["M"+address].value);
-	if(diff>999){
-		document.CPU.CARRY.value = "1";
-		diff = diff.toString().substring(1,4);
-	};
-	document.CPU.AC.value = stripNpad(diff.toString());
-	return 0;
-};
-
-function LDA(address){
+function LDA(operand){
 	document.CPU.CARRY.value = "0";
-	document.CPU.AC.value = document.Memory["M"+address].value;
+	document.CPU.AC.value = document.Memory["M"+operand].value;
 	return 0;
 };
 
-function STA(address){
-	document.Memory["M"+address].value = document.CPU.AC.value;
+function STA(operand){
+	document.Memory["M"+operand].value = document.CPU.AC.value;
 	return 0;
 };
 
-function JMP(address){
+function JMP(operand){
 	document.Memory["M99"].value = " 0" + document.CPU.PC.value;
 	document.images["M"+document.CPU.PC.value].src = "blank.gif";
-	document.CPU.PC.value = address;
+	document.CPU.PC.value = operand;
 	document.images["M"+document.CPU.PC.value].src = "highlight.gif";
 	return 0;
 };
 
-function TAC(address){
+function TAC(operand){
 	if(document.CPU.AC.value < 0){
 		document.images["M"+document.CPU.PC.value].src = "blank.gif";
-		document.CPU.PC.value = address;
-		document.images["M"+document.CPU.PC.value].src = "highlight.gif";
-	};
-	return 0;
-};
-
-function TAC10(address){
-	if(document.CPU.AC.value >= 500){
-		document.images["M"+document.CPU.PC.value].src = "blank.gif";
-		document.CPU.PC.value = address;
+		document.CPU.PC.value = operand;
 		document.images["M"+document.CPU.PC.value].src = "highlight.gif";
 	};
 	return 0;
@@ -207,9 +185,9 @@ function SHF(XY){
 	return 0;
 };
 
-function HLT(address){
+function HLT(operand){
 	document.images["M"+document.CPU.PC.value].src = "blank.gif";
-	document.CPU.PC.value = address;
+	document.CPU.PC.value = operand;
 	document.images["M"+document.CPU.PC.value].src = "highlight.gif";
 	resetInput();
 	alert('Program terminated normally');
