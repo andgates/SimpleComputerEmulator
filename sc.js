@@ -10,6 +10,7 @@ function initialize(){
 function cycle(N){
 	for (i=1; i<=N; i++){
 		if (fetch()) break;
+		if (decode()) break;
 		if (document.CPU.Exec[0].checked){
 			if (signExecute()) break;
 		} else {
@@ -37,9 +38,13 @@ function fetch(){
 	return 0;
 };
 
-function signExecute(){
+function decode(){
 	opCode = IR.charAt(1);
 	address = IR.substring(2,4);
+	return 0;
+};
+
+function signExecute(){
 	if(opCode=="0"){return INP(address);};
 	if(opCode=="1"){return OUT(address);};
 	if(opCode=="2"){return ADD(address);};
