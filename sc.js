@@ -44,9 +44,16 @@ function fetch(){
 	};
 	// Update the IR input box in index.html
 	document.CPU.IR.value = IR;
+	// Store the current value of the PC text box in index.html in the variable PC
 	PC = document.CPU.PC.value;
+	// Increment Program Counter
 	PC++;
-	document.CPU.PC.value = (PC.toString().length==1? "0"+PC: PC.toString());
+	// Update the PC input box in index.html
+	document.CPU.PC.value = 
+	// Convert PC to a string, if length is less than 1 (ie. PC < 10), add "0" to the front
+	(PC.toString().length==1? "0"+PC:
+	// Else PC is greater than 10 so simply convert to string
+	PC.toString());
 	return 0;
 };
 
