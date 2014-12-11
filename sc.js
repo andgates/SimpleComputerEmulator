@@ -6,9 +6,7 @@ Function Initialize:
 */
 function initialize(){
 	document.CPU.PC.value='00';
-	document.images["M00"].src = "highlight.gif";
 	inCardNo="01";
-	document.images["I01"].src = "highlight.gif";
 	outCardNo="01";
 };
 
@@ -46,11 +44,9 @@ function fetch(){
 	};
 	// Update the IR input box in index.html
 	document.CPU.IR.value = IR;
-	document.images["M"+document.CPU.PC.value].src = "blank.gif";
 	PC = document.CPU.PC.value;
 	PC++;
 	document.CPU.PC.value = (PC.toString().length==1? "0"+PC: PC.toString());
-	document.images["M"+document.CPU.PC.value].src = "highlight.gif";
 	return 0;
 };
 
@@ -81,10 +77,8 @@ function INP(operand){
 		return 1;
 	};
 	document.Memory["M"+operand].value = In;
-	document.images["I"+inCardNo].src = "blank.gif";
 	inCardNo++;
 	inCardNo = (inCardNo.toString().length==1? "0"+inCardNo: inCardNo.toString());
-	document.images["I"+inCardNo].src = "highlight.gif";
 	return 0;
 };
 
@@ -143,17 +137,13 @@ function STA(operand){
 
 function JMP(operand){
 	document.Memory["M99"].value = " 0" + document.CPU.PC.value;
-	document.images["M"+document.CPU.PC.value].src = "blank.gif";
 	document.CPU.PC.value = operand;
-	document.images["M"+document.CPU.PC.value].src = "highlight.gif";
 	return 0;
 };
 
 function TAC(operand){
 	if(document.CPU.AC.value < 0){
-		document.images["M"+document.CPU.PC.value].src = "blank.gif";
 		document.CPU.PC.value = operand;
-		document.images["M"+document.CPU.PC.value].src = "highlight.gif";
 	};
 	return 0;
 };
@@ -186,9 +176,7 @@ function SHF(XY){
 };
 
 function HLT(operand){
-	document.images["M"+document.CPU.PC.value].src = "blank.gif";
 	document.CPU.PC.value = operand;
-	document.images["M"+document.CPU.PC.value].src = "highlight.gif";
 	resetInput();
 	alert('Program terminated normally');
 	return 1;
@@ -238,14 +226,10 @@ function stripNpadPC(cellvalue){
 };
 
 function clearCPU(){
-	document.images["M"+document.CPU.PC.value].src = "blank.gif";
-	document.M00.src = "highlight.gif";
 };
 
 function resetInput(){
-	document.images['I'+inCardNo].src='blank.gif';
 	inCardNo='01';
-	document.images['I01'].src='highlight.gif';
 };
 
 function clearOutput(){
