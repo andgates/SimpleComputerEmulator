@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta content="utf-8" http-equiv="encoding">
 	<meta name="Author" content="Michael"/>
 	<meta name="Description" content="Simple Computer Emulator in JavaScript" />
 	<title>Antiquated Computer</title>
@@ -40,15 +41,7 @@
 						<tr>
 							<td align="CENTER" colspan="2">
 								<b>AC&nbsp;<input type="TEXT" name="CARRY" size="1" maxlength="1" onfocus="assignedValue=document.CPU.CARRY.value;" onblur="document.CPU.CARRY.value=assignedValue;"><input type="TEXT" name="AC" size="4" maxlength="4" onfocus="assignedValue=document.CPU.AC.value;" onblur="document.CPU.AC.value=assignedValue;"></input>&nbsp;&nbsp;IR&nbsp;<input type="TEXT" name="IR" size="4" maxlength="4" onfocus="assignedValue=document.CPU.IR.value;" onblur="document.CPU.IR.value=assignedValue;"></input>&nbsp;&nbsp;PC&nbsp;<input type="TEXT" name="PC" size="2" maxlength="2" value="00" onblur="document.CPU.PC.value=stripNpadPC(document.CPU.PC.value);"></input></b>
-									<table>
-										<tr>
-											<td>
-												<input type="RADIO" name="Exec" value="SIGNED" style="display: none;" checked></input>
-												<input type="RADIO" name="Exec" value="TENS" style="display: none;" ></input>
-											</td>
-										</tr>
-									</table>
-									<input type="BUTTON" value="Step" onclick="cycle(1)"><input type="BUTTON" value="Run" onclick="cycle(100)">
+								<input type="BUTTON" value="Step" onclick="cycle(1)"><input type="BUTTON" value="Run" onclick="cycle(100)">
 							</td>
 						</tr>
 					</table>
