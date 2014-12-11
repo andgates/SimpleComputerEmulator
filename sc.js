@@ -277,26 +277,27 @@ function fileLoader(){
 	programURL = self.location.href.substring(0,lastindex+1);
 	loaderHTML = 
 		"<!DOCTYPE html>"+
-		"<HTML>"+
-			"<HEAD>"+
-				"<TITLE>Files</TITLE>"+
-			"</HEAD>"+
-			"<BODY LINK='#000000' VLINK='#000000' BGCOLOR='#CCCCCC'>"+
-				"<FORM NAME='select'>"+
-					"<INPUT TYPE=TEXT NAME='file' SIZE=40></INPUT><INPUT TYPE=BUTTON VALUE='Select' onClick='DC.selectfile();'>"+
-					"<TABLE CELLPADDING=5 CELLSPACING=0 WIDTH=100% BORDER=0>"+
-						"<TR><TD>"+ programURL+ "</TD></TR>"+
-						"<TR><TD BGCOLOR='#FFFFFF' HEIGHT=175 VALIGN=TOP>"+
-							"<A HREF='DIVISION.html' onClick=\"document.select.file.value='"+ programURL+ "DIVISION.html';return false;\">DIVISION.html</A><BR>"+
-							"<A HREF='SHIFTING.html' onClick=\"document.select.file.value='"+ programURL+ "SHIFTING.html';return false;\">SHIFTING.html</A><BR>"+
-							"<A HREF='ABSOLUTE.html' onClick=\"document.select.file.value='"+ programURL+ "ABSOLUTE.html';return false;\">ABSOLUTE.html</A><BR>"+
-							"<A HREF='BOOTSTRAP.html' onClick=\"document.select.file.value='"+ programURL+ "BOOTSTRAP.html';return false;\">BOOTSTRAP.html</A><BR>"+
-							"<A HREF='MINNUMBER.html' onClick=\"document.select.file.value='"+ programURL+ "MINNUMBER.html';return false;\">MINNUMBER.html</A><BR>"+
-						"</TD></TR>"+
-					"</TABLE>"+
-				"</FORM>"+
-			"</BODY>"+
-		"</HTML>";
+			"<HTML>"+
+				"<HEAD>"+
+					"<TITLE>File Loader</TITLE>"+
+				"</HEAD>"+
+				"<BODY>"+
+					"<FORM NAME='select'>"+
+						"<INPUT TYPE=TEXT NAME='file' SIZE=40></INPUT><INPUT TYPE=BUTTON VALUE='Select' onClick='DC.selectfile();'>"+
+						"<TABLE CELLPADDING=5 CELLSPACING=0 WIDTH=100% BORDER=0>"+
+							"<TR><TD>"+ programURL+ "</TD></TR>"+
+							"<TR><TD BGCOLOR='#FFFFFF' HEIGHT=175 VALIGN=TOP>"+
+								"<A HREF='DIVISION.html' onClick=\"document.select.file.value='"+ programURL+ "DIVISION.html';return false;\">DIVISION.html</A><BR>"+
+								"<A HREF='SHIFTING.html' onClick=\"document.select.file.value='"+ programURL+ "SHIFTING.html';return false;\">SHIFTING.html</A><BR>"+
+								"<A HREF='ABSOLUTE.html' onClick=\"document.select.file.value='"+ programURL+ "ABSOLUTE.html';return false;\">ABSOLUTE.html</A><BR>"+
+								"<A HREF='BOOTSTRAP.html' onClick=\"document.select.file.value='"+ programURL+ "BOOTSTRAP.html';return false;\">BOOTSTRAP.html</A><BR>"+
+								"<A HREF='MINNUMBER.html' onClick=\"document.select.file.value='"+ programURL+ "MINNUMBER.html';return false;\">MINNUMBER.html</A><BR>"+
+								"<A HREF='myProgram.html' onClick=\"document.select.file.value='"+ programURL+ "myProgram.html';return false;\">myProgram.html</A><BR>"+
+							"</TD></TR>"+
+						"</TABLE>"+
+					"</FORM>"+
+				"</BODY>"+
+			"</HTML>";
 	filewindow = window.open('javascript:opener.loaderHTML','files','width=400,height=250');
 	filewindow.focus();
 	filewindow.DC=self;
@@ -352,8 +353,8 @@ function savefile(){
 			"</BODY>"+
 		"</HTML>";
 
-	var blob = new Blob([savefilepage], {type: "text/html;charset=utf-8"});
-	saveAs(blob, "myProgram.html");
+	var save = new Blob([savefilepage], {type: "text/html;charset=utf-8"});
+	saveAs(save, "myProgram.html");
 		
 	//programwindow = window.open('javascript:opener.savefilepage','programs','width=300,height=150,menubar');
 	//programwindow.focus();
