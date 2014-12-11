@@ -14,54 +14,313 @@
 
 <body onload="initialize();">
 <center>
-	<!--Outer Table-->
-	<table>
-		<tr>
-		<td>
-			<!--Main Table-->
-			<table>
-				<!--Top Portion and Memory-->
+	<!--Main Container-->
+	<div id="container">
+	
+		<div id="header">
+			<h2>Simple Computer Emulator</h2>
+			<input type="BUTTON" value="Load" onclick="fileLoader();">
+			<input type="BUTTON" value="Save" onclick="savefile();">
+			<input type="BUTTON" value="Help" onclick="help();">
+		</div>
+	
+		<div id="leftConatiner">
+			<form name="CPU">
+			<table width="260" cellpadding="5" cellspacing="0">
 				<tr>
-				<!--Left Control Box-->
-				<td colspan="2" valign="TOP" width="290" style="padding-right: 20px;">
-					<form name="CPU">
-					<table width="260" cellpadding="5" cellspacing="0">
+					<td align="CENTER">
+						<b>Central Processing Unit</b>
+					</td>
+				</tr>
+				<tr>
+					<td align="CENTER">
+						<input type="RESET" value="Clear">
+						<input type="BUTTON" value="Clear All" onclick="clearAll();">
+					</td>
+				</tr>
+				<tr>
+					<td align="CENTER" colspan="2">
+						<b>AC&nbsp;<input type="TEXT" name="CARRY" size="1" maxlength="1" onfocus="assignedValue=document.CPU.CARRY.value;" onblur="document.CPU.CARRY.value=assignedValue;"><input type="TEXT" name="AC" size="4" maxlength="4" onfocus="assignedValue=document.CPU.AC.value;" onblur="document.CPU.AC.value=assignedValue;"></input>&nbsp;&nbsp;IR&nbsp;<input type="TEXT" name="IR" size="4" maxlength="4" onfocus="assignedValue=document.CPU.IR.value;" onblur="document.CPU.IR.value=assignedValue;"></input>&nbsp;&nbsp;PC&nbsp;<input type="TEXT" name="PC" size="2" maxlength="2" value="00" onblur="document.CPU.PC.value=formatPC(document.CPU.PC.value);"></input></b>
+						<input type="BUTTON" value="Step" onclick="cycle(1)"><input type="BUTTON" value="Run" onclick="cycle(100)">
+					</td>
+				</tr>
+			</table>
+			</form>
+		</div>
+		
+		<!--Input and Output Cards-->
+			<div id="inputCardContainer">
+					<form name="Input">
+					<table width="125" cellpadding="5" cellspacing="0">
 						<tr>
 							<td align="CENTER">
-								<b>Central Processing Unit</b>
+								<font size="3"><b>Input&nbsp;Cards</b><br>
+									<font size="2">
+										<input type="RESET" value="Clear" onclick="resetInput();"></input></font><br>
+								</font>
 							</td>
 						</tr>
 						<tr>
 							<td align="CENTER">
-								<input type="RESET" value="Clear">
-								<input type="BUTTON" value="Clear All" onclick="clearAll();">
-							</td>
-						</tr>
-						<tr>
-							<td align="CENTER" colspan="2">
-								<b>AC&nbsp;<input type="TEXT" name="CARRY" size="1" maxlength="1" onfocus="assignedValue=document.CPU.CARRY.value;" onblur="document.CPU.CARRY.value=assignedValue;"><input type="TEXT" name="AC" size="4" maxlength="4" onfocus="assignedValue=document.CPU.AC.value;" onblur="document.CPU.AC.value=assignedValue;"></input>&nbsp;&nbsp;IR&nbsp;<input type="TEXT" name="IR" size="4" maxlength="4" onfocus="assignedValue=document.CPU.IR.value;" onblur="document.CPU.IR.value=assignedValue;"></input>&nbsp;&nbsp;PC&nbsp;<input type="TEXT" name="PC" size="2" maxlength="2" value="00" onblur="document.CPU.PC.value=formatPC(document.CPU.PC.value);"></input></b>
-								<input type="BUTTON" value="Step" onclick="cycle(1)"><input type="BUTTON" value="Run" onclick="cycle(100)">
-							</td>
-						</tr>
-					</table>
-					</form>
-				</td>
-				<!--Right Half: Title + Memory-->
-				<td rowspan="2" valign="TOP">
-					<form name="Main">
-					<table cellpadding="5" cellspacing="0" style="padding-left: 80px;">
-						<tr>
-							<td>
-								<table>
+								<table cellpadding="0" cellspacing="0" border="0">
 									<tr>
-										<td align="CENTER">
-											<h2>Simple Computer Emulator</h2>
+										<td>
+											<font size="3"><b>01:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I01" size="4" maxlength="4" onblur="document.Input.I01.value=format(document.Input.I01.value);"></input>
 										</td>
 									</tr>
 									<tr>
-										<td align="CENTER">
-											<input type="BUTTON" value="Load" onclick="fileLoader();"></input><input type="BUTTON" value="Save" onclick="savefile();"></input>&nbsp;&nbsp;&nbsp;&nbsp;
-											<input type="BUTTON" value="Help" onclick="help();"></input>
+										<td>
+											<font size="3"><b>02:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I02" size="4" maxlength="4" onblur="document.Input.I02.value=format(document.Input.I02.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>03:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I03" size="4" maxlength="4" onblur="document.Input.I03.value=format(document.Input.I03.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>04:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I04" size="4" maxlength="4" onblur="document.Input.I04.value=format(document.Input.I04.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>05:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I05" size="4" maxlength="4" onblur="document.Input.I05.value=format(document.Input.I05.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>06:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I06" size="4" maxlength="4" onblur="document.Input.I06.value=format(document.Input.I06.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>07:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I07" size="4" maxlength="4" onblur="document.Input.I07.value=format(document.Input.I07.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>08:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I08" size="4" maxlength="4" onblur="document.Input.I08.value=format(document.Input.I08.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>09:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I09" size="4" maxlength="4" onblur="document.Input.I09.value=format(document.Input.I09.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>10:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I10" size="4" maxlength="4" onblur="document.Input.I10.value=format(document.Input.I10.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>11:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I11" size="4" maxlength="4" onblur="document.Input.I11.value=format(document.Input.I11.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>12:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I12" size="4" maxlength="4" onblur="document.Input.I12.value=format(document.Input.I12.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>13:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I13" size="4" maxlength="4" onblur="document.Input.I13.value=format(document.Input.I13.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>14:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I14" size="4" maxlength="4" onblur="document.Input.I14.value=format(document.Input.I14.value);"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<font size="3"><b>15:</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="I15" size="4" maxlength="4" onblur="document.Input.I15.value=format(document.Input.I15.value);"></input>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</form>
+				</div>
+				
+				<div id="outputCard">
+					<form name="Output">
+					<table width="125" cellpadding="5" cellspacing="0">
+						<tr>
+							<td align="CENTER">
+								<font size="3"><b>Output&nbsp;Cards</b><br>
+									<font size="2">
+										<input type="RESET" value="Clear" onclick="clearOutput();"></input></font><br>
+								</font>
+							</td>
+						</tr>
+						<tr>
+							<td align="CENTER">
+								<table cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<td height="24">
+											<font size="3"><b>01:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out01" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out01.value;" onblur="document.Output.Out01.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>02:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out02" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out02.value;" onblur="document.Output.Out02.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>03:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out03" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out03.value;" onblur="document.Output.Out03.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>04:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out04" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out04.value;" onblur="document.Output.Out04.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>05:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out05" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out05.value;" onblur="document.Output.Out05.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>06:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out06" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out06.value;" onblur="document.Output.Out06.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>07:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out07" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out07.value;" onblur="document.Output.Out07.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>08:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out08" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out08.value;" onblur="document.Output.Out08.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>09:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out09" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out09.value;" onblur="document.Output.Out09.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>10:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out10" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out10.value;" onblur="document.Output.Out10.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>11:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out11" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out11.value;" onblur="document.Output.Out11.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>12:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out12" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out12.value;" onblur="document.Output.Out12.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>13:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out13" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out13.value;" onblur="document.Output.Out13.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>14:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out14" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out14.value;" onblur="document.Output.Out14.value=assignedValue;"></input>
+										</td>
+									</tr>
+									<tr>
+										<td height="24">
+											<font size="3"><b>15:&nbsp;</b></font>
+										</td>
+										<td>
+											<input type="TEXT" name="Out15" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out15.value;" onblur="document.Output.Out15.value=assignedValue;"></input>
 										</td>
 									</tr>
 								</table>
@@ -69,7 +328,10 @@
 						</tr>
 					</table>
 					</form>
+					</div>
 					
+					
+					<div id="rightContainer">
 					<!--Memory-->
 					<form name="Memory">
 					<table cellpadding="5" cellspacing="0">
@@ -908,296 +1170,10 @@
 						</tr>
 					</table>
 					</form>
-				</td>
-			</tr>
-			
-			<!--Input and Output Cards-->
-			<tr>
-				<td valign="BOTTOM" style="padding-right: 20px;">
-					<form name="Input">
-					<table width="125" cellpadding="5" cellspacing="0">
-						<tr>
-							<td align="CENTER">
-								<font size="3"><b>Input&nbsp;Cards</b><br>
-									<font size="2">
-										<input type="RESET" value="Clear" onclick="resetInput();"></input></font><br>
-								</font>
-							</td>
-						</tr>
-						<tr>
-							<td align="CENTER">
-								<table cellpadding="0" cellspacing="0" border="0">
-									<tr>
-										<td>
-											<font size="3"><b>01:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I01" size="4" maxlength="4" onblur="document.Input.I01.value=format(document.Input.I01.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>02:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I02" size="4" maxlength="4" onblur="document.Input.I02.value=format(document.Input.I02.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>03:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I03" size="4" maxlength="4" onblur="document.Input.I03.value=format(document.Input.I03.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>04:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I04" size="4" maxlength="4" onblur="document.Input.I04.value=format(document.Input.I04.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>05:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I05" size="4" maxlength="4" onblur="document.Input.I05.value=format(document.Input.I05.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>06:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I06" size="4" maxlength="4" onblur="document.Input.I06.value=format(document.Input.I06.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>07:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I07" size="4" maxlength="4" onblur="document.Input.I07.value=format(document.Input.I07.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>08:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I08" size="4" maxlength="4" onblur="document.Input.I08.value=format(document.Input.I08.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>09:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I09" size="4" maxlength="4" onblur="document.Input.I09.value=format(document.Input.I09.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>10:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I10" size="4" maxlength="4" onblur="document.Input.I10.value=format(document.Input.I10.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>11:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I11" size="4" maxlength="4" onblur="document.Input.I11.value=format(document.Input.I11.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>12:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I12" size="4" maxlength="4" onblur="document.Input.I12.value=format(document.Input.I12.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>13:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I13" size="4" maxlength="4" onblur="document.Input.I13.value=format(document.Input.I13.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>14:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I14" size="4" maxlength="4" onblur="document.Input.I14.value=format(document.Input.I14.value);"></input>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font size="3"><b>15:</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="I15" size="4" maxlength="4" onblur="document.Input.I15.value=format(document.Input.I15.value);"></input>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-					</form>
-				</td>
-				<td valign="BOTTOM" style="padding-right: 20px;">
-					<form name="Output">
-					<table width="125" cellpadding="5" cellspacing="0">
-						<tr>
-							<td align="CENTER">
-								<font size="3"><b>Output&nbsp;Cards</b><br>
-									<font size="2">
-										<input type="RESET" value="Clear" onclick="clearOutput();"></input></font><br>
-								</font>
-							</td>
-						</tr>
-						<tr>
-							<td align="CENTER">
-								<table cellpadding="0" cellspacing="0" border="0">
-									<tr>
-										<td height="24">
-											<font size="3"><b>01:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out01" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out01.value;" onblur="document.Output.Out01.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>02:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out02" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out02.value;" onblur="document.Output.Out02.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>03:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out03" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out03.value;" onblur="document.Output.Out03.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>04:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out04" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out04.value;" onblur="document.Output.Out04.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>05:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out05" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out05.value;" onblur="document.Output.Out05.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>06:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out06" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out06.value;" onblur="document.Output.Out06.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>07:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out07" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out07.value;" onblur="document.Output.Out07.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>08:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out08" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out08.value;" onblur="document.Output.Out08.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>09:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out09" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out09.value;" onblur="document.Output.Out09.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>10:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out10" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out10.value;" onblur="document.Output.Out10.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>11:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out11" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out11.value;" onblur="document.Output.Out11.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>12:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out12" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out12.value;" onblur="document.Output.Out12.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>13:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out13" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out13.value;" onblur="document.Output.Out13.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>14:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out14" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out14.value;" onblur="document.Output.Out14.value=assignedValue;"></input>
-										</td>
-									</tr>
-									<tr>
-										<td height="24">
-											<font size="3"><b>15:&nbsp;</b></font>
-										</td>
-										<td>
-											<input type="TEXT" name="Out15" size="4" maxlength="4" onfocus="assignedValue=document.Output.Out15.value;" onblur="document.Output.Out15.value=assignedValue;"></input>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-					</form>
-				</td>
-			</tr>
-			</table>
-		</td>
-		</tr>
-	</table>
+					</div>
+
+
+	</div>
 </center>
 </body>
 </html>
