@@ -40,7 +40,7 @@
 						</tr>
 						<tr>
 							<td align="CENTER" colspan="2">
-								<b>AC&nbsp;<input type="TEXT" name="CARRY" size="1" maxlength="1" onfocus="assignedValue=document.CPU.CARRY.value;" onblur="document.CPU.CARRY.value=assignedValue;"><input type="TEXT" name="AC" size="4" maxlength="4" onfocus="assignedValue=document.CPU.AC.value;" onblur="document.CPU.AC.value=assignedValue;"></input>&nbsp;&nbsp;IR&nbsp;<input type="TEXT" name="IR" size="4" maxlength="4" onfocus="assignedValue=document.CPU.IR.value;" onblur="document.CPU.IR.value=assignedValue;"></input>&nbsp;&nbsp;PC&nbsp;<input type="TEXT" name="PC" size="2" maxlength="2" value="00" onblur="document.CPU.PC.value=stripNpadPC(document.CPU.PC.value);"></input></b>
+								<b>AC&nbsp;<input type="TEXT" name="CARRY" size="1" maxlength="1" onfocus="assignedValue=document.CPU.CARRY.value;" onblur="document.CPU.CARRY.value=assignedValue;"><input type="TEXT" name="AC" size="4" maxlength="4" onfocus="assignedValue=document.CPU.AC.value;" onblur="document.CPU.AC.value=assignedValue;"></input>&nbsp;&nbsp;IR&nbsp;<input type="TEXT" name="IR" size="4" maxlength="4" onfocus="assignedValue=document.CPU.IR.value;" onblur="document.CPU.IR.value=assignedValue;"></input>&nbsp;&nbsp;PC&nbsp;<input type="TEXT" name="PC" size="2" maxlength="2" value="00" onblur="document.CPU.PC.value=formatPC(document.CPU.PC.value);"></input></b>
 								<input type="BUTTON" value="Step" onclick="cycle(1)"><input type="BUTTON" value="Run" onclick="cycle(100)">
 							</td>
 						</tr>
@@ -61,7 +61,7 @@
 									</tr>
 									<tr>
 										<td align="CENTER">
-											<input type="BUTTON" value="Load" onclick="listfiles();"></input><input type="BUTTON" value="Save" onclick="savefile();"></input>&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="BUTTON" value="Load" onclick="fileLoader();"></input><input type="BUTTON" value="Save" onclick="savefile();"></input>&nbsp;&nbsp;&nbsp;&nbsp;
 											<input type="BUTTON" value="Help" onclick="help();"></input>
 										</td>
 									</tr>
@@ -98,7 +98,7 @@
 														<font size="3"><b>01:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M01" size="4" maxlength="4" onblur="document.Memory.M01.value=stripNpad(document.Memory.M01.value);"></input>
+														<input type="TEXT" name="M01" size="4" maxlength="4" onblur="document.Memory.M01.value=format(document.Memory.M01.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -106,7 +106,7 @@
 														<font size="3"><b>02:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M02" size="4" maxlength="4" onblur="document.Memory.M02.value=stripNpad(document.Memory.M02.value);"></input>
+														<input type="TEXT" name="M02" size="4" maxlength="4" onblur="document.Memory.M02.value=format(document.Memory.M02.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -114,7 +114,7 @@
 														<font size="3"><b>03:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M03" size="4" maxlength="4" onblur="document.Memory.M03.value=stripNpad(document.Memory.M03.value);"></input>
+														<input type="TEXT" name="M03" size="4" maxlength="4" onblur="document.Memory.M03.value=format(document.Memory.M03.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -122,7 +122,7 @@
 														<font size="3"><b>04:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M04" size="4" maxlength="4" onblur="document.Memory.M04.value=stripNpad(document.Memory.M04.value);"></input>
+														<input type="TEXT" name="M04" size="4" maxlength="4" onblur="document.Memory.M04.value=format(document.Memory.M04.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -130,7 +130,7 @@
 														<font size="3"><b>05:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M05" size="4" maxlength="4" onblur="document.Memory.M05.value=stripNpad(document.Memory.M05.value);"></input>
+														<input type="TEXT" name="M05" size="4" maxlength="4" onblur="document.Memory.M05.value=format(document.Memory.M05.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -138,7 +138,7 @@
 														<font size="3"><b>06:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M06" size="4" maxlength="4" onblur="document.Memory.M06.value=stripNpad(document.Memory.M06.value);"></input>
+														<input type="TEXT" name="M06" size="4" maxlength="4" onblur="document.Memory.M06.value=format(document.Memory.M06.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -146,7 +146,7 @@
 														<font size="3"><b>07:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M07" size="4" maxlength="4" onblur="document.Memory.M07.value=stripNpad(document.Memory.M07.value);"></input>
+														<input type="TEXT" name="M07" size="4" maxlength="4" onblur="document.Memory.M07.value=format(document.Memory.M07.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -154,7 +154,7 @@
 														<font size="3"><b>08:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M08" size="4" maxlength="4" onblur="document.Memory.M08.value=stripNpad(document.Memory.M08.value);"></input>
+														<input type="TEXT" name="M08" size="4" maxlength="4" onblur="document.Memory.M08.value=format(document.Memory.M08.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -162,7 +162,7 @@
 														<font size="3"><b>09:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M09" size="4" maxlength="4" onblur="document.Memory.M09.value=stripNpad(document.Memory.M09.value);"></input>
+														<input type="TEXT" name="M09" size="4" maxlength="4" onblur="document.Memory.M09.value=format(document.Memory.M09.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -170,7 +170,7 @@
 														<font size="3"><b>10:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M10" size="4" maxlength="4" onblur="document.Memory.M10.value=stripNpad(document.Memory.M10.value);"></input>
+														<input type="TEXT" name="M10" size="4" maxlength="4" onblur="document.Memory.M10.value=format(document.Memory.M10.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -178,7 +178,7 @@
 														<font size="3"><b>11:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M11" size="4" maxlength="4" onblur="document.Memory.M11.value=stripNpad(document.Memory.M11.value);"></input>
+														<input type="TEXT" name="M11" size="4" maxlength="4" onblur="document.Memory.M11.value=format(document.Memory.M11.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -186,7 +186,7 @@
 														<font size="3"><b>12:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M12" size="4" maxlength="4" onblur="document.Memory.M12.value=stripNpad(document.Memory.M12.value);"></input>
+														<input type="TEXT" name="M12" size="4" maxlength="4" onblur="document.Memory.M12.value=format(document.Memory.M12.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -194,7 +194,7 @@
 														<font size="3"><b>13:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M13" size="4" maxlength="4" onblur="document.Memory.M13.value=stripNpad(document.Memory.M13.value);"></input>
+														<input type="TEXT" name="M13" size="4" maxlength="4" onblur="document.Memory.M13.value=format(document.Memory.M13.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -202,7 +202,7 @@
 														<font size="3"><b>14:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M14" size="4" maxlength="4" onblur="document.Memory.M14.value=stripNpad(document.Memory.M14.value);"></input>
+														<input type="TEXT" name="M14" size="4" maxlength="4" onblur="document.Memory.M14.value=format(document.Memory.M14.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -210,7 +210,7 @@
 														<font size="3"><b>15:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M15" size="4" maxlength="4" onblur="document.Memory.M15.value=stripNpad(document.Memory.M15.value);"></input>
+														<input type="TEXT" name="M15" size="4" maxlength="4" onblur="document.Memory.M15.value=format(document.Memory.M15.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -218,7 +218,7 @@
 														<font size="3"><b>16:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M16" size="4" maxlength="4" onblur="document.Memory.M16.value=stripNpad(document.Memory.M16.value);"></input>
+														<input type="TEXT" name="M16" size="4" maxlength="4" onblur="document.Memory.M16.value=format(document.Memory.M16.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -226,7 +226,7 @@
 														<font size="3"><b>17:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M17" size="4" maxlength="4" onblur="document.Memory.M17.value=stripNpad(document.Memory.M17.value);"></input>
+														<input type="TEXT" name="M17" size="4" maxlength="4" onblur="document.Memory.M17.value=format(document.Memory.M17.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -234,7 +234,7 @@
 														<font size="3"><b>18:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M18" size="4" maxlength="4" onblur="document.Memory.M18.value=stripNpad(document.Memory.M18.value);"></input>
+														<input type="TEXT" name="M18" size="4" maxlength="4" onblur="document.Memory.M18.value=format(document.Memory.M18.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -242,7 +242,7 @@
 														<font size="3"><b>19:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M19" size="4" maxlength="4" onblur="document.Memory.M19.value=stripNpad(document.Memory.M19.value);"></input>
+														<input type="TEXT" name="M19" size="4" maxlength="4" onblur="document.Memory.M19.value=format(document.Memory.M19.value);"></input>
 													</td>
 												</tr>
 											</table>
@@ -254,7 +254,7 @@
 														<font size="3"><b>20:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M20" size="4" maxlength="4" onblur="document.Memory.M20.value=stripNpad(document.Memory.M20.value);"></input>
+														<input type="TEXT" name="M20" size="4" maxlength="4" onblur="document.Memory.M20.value=format(document.Memory.M20.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -262,7 +262,7 @@
 														<font size="3"><b>21:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M21" size="4" maxlength="4" onblur="document.Memory.M21.value=stripNpad(document.Memory.M21.value);"></input>
+														<input type="TEXT" name="M21" size="4" maxlength="4" onblur="document.Memory.M21.value=format(document.Memory.M21.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -270,7 +270,7 @@
 														<font size="3"><b>22:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M22" size="4" maxlength="4" onblur="document.Memory.M22.value=stripNpad(document.Memory.M22.value);"></input>
+														<input type="TEXT" name="M22" size="4" maxlength="4" onblur="document.Memory.M22.value=format(document.Memory.M22.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -278,7 +278,7 @@
 														<font size="3"><b>23:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M23" size="4" maxlength="4" onblur="document.Memory.M23.value=stripNpad(document.Memory.M23.value);"></input>
+														<input type="TEXT" name="M23" size="4" maxlength="4" onblur="document.Memory.M23.value=format(document.Memory.M23.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -286,7 +286,7 @@
 														<font size="3"><b>24:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M24" size="4" maxlength="4" onblur="document.Memory.M24.value=stripNpad(document.Memory.M24.value);"></input>
+														<input type="TEXT" name="M24" size="4" maxlength="4" onblur="document.Memory.M24.value=format(document.Memory.M24.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -294,7 +294,7 @@
 														<font size="3"><b>25:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M25" size="4" maxlength="4" onblur="document.Memory.M25.value=stripNpad(document.Memory.M25.value);"></input>
+														<input type="TEXT" name="M25" size="4" maxlength="4" onblur="document.Memory.M25.value=format(document.Memory.M25.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -302,7 +302,7 @@
 														<font size="3"><b>26:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M26" size="4" maxlength="4" onblur="document.Memory.M26.value=stripNpad(document.Memory.M26.value);"></input>
+														<input type="TEXT" name="M26" size="4" maxlength="4" onblur="document.Memory.M26.value=format(document.Memory.M26.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -310,7 +310,7 @@
 														<font size="3"><b>27:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M27" size="4" maxlength="4" onblur="document.Memory.M27.value=stripNpad(document.Memory.M27.value);"></input>
+														<input type="TEXT" name="M27" size="4" maxlength="4" onblur="document.Memory.M27.value=format(document.Memory.M27.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -318,7 +318,7 @@
 														<font size="3"><b>28:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M28" size="4" maxlength="4" onblur="document.Memory.M28.value=stripNpad(document.Memory.M28.value);"></input>
+														<input type="TEXT" name="M28" size="4" maxlength="4" onblur="document.Memory.M28.value=format(document.Memory.M28.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -326,7 +326,7 @@
 														<font size="3"><b>29:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M29" size="4" maxlength="4" onblur="document.Memory.M29.value=stripNpad(document.Memory.M29.value);"></input>
+														<input type="TEXT" name="M29" size="4" maxlength="4" onblur="document.Memory.M29.value=format(document.Memory.M29.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -334,7 +334,7 @@
 														<font size="3"><b>30:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M30" size="4" maxlength="4" onblur="document.Memory.M30.value=stripNpad(document.Memory.M30.value);"></input>
+														<input type="TEXT" name="M30" size="4" maxlength="4" onblur="document.Memory.M30.value=format(document.Memory.M30.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -342,7 +342,7 @@
 														<font size="3"><b>31:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M31" size="4" maxlength="4" onblur="document.Memory.M31.value=stripNpad(document.Memory.M31.value);"></input>
+														<input type="TEXT" name="M31" size="4" maxlength="4" onblur="document.Memory.M31.value=format(document.Memory.M31.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -350,7 +350,7 @@
 														<font size="3"><b>32:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M32" size="4" maxlength="4" onblur="document.Memory.M32.value=stripNpad(document.Memory.M32.value);"></input>
+														<input type="TEXT" name="M32" size="4" maxlength="4" onblur="document.Memory.M32.value=format(document.Memory.M32.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -358,7 +358,7 @@
 														<font size="3"><b>33:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M33" size="4" maxlength="4" onblur="document.Memory.M33.value=stripNpad(document.Memory.M33.value);"></input>
+														<input type="TEXT" name="M33" size="4" maxlength="4" onblur="document.Memory.M33.value=format(document.Memory.M33.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -366,7 +366,7 @@
 														<font size="3"><b>34:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M34" size="4" maxlength="4" onblur="document.Memory.M34.value=stripNpad(document.Memory.M34.value);"></input>
+														<input type="TEXT" name="M34" size="4" maxlength="4" onblur="document.Memory.M34.value=format(document.Memory.M34.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -374,7 +374,7 @@
 														<font size="3"><b>35:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M35" size="4" maxlength="4" onblur="document.Memory.M35.value=stripNpad(document.Memory.M35.value);"></input>
+														<input type="TEXT" name="M35" size="4" maxlength="4" onblur="document.Memory.M35.value=format(document.Memory.M35.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -382,7 +382,7 @@
 														<font size="3"><b>36:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M36" size="4" maxlength="4" onblur="document.Memory.M36.value=stripNpad(document.Memory.M36.value);"></input>
+														<input type="TEXT" name="M36" size="4" maxlength="4" onblur="document.Memory.M36.value=format(document.Memory.M36.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -390,7 +390,7 @@
 														<font size="3"><b>37:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M37" size="4" maxlength="4" onblur="document.Memory.M37.value=stripNpad(document.Memory.M37.value);"></input>
+														<input type="TEXT" name="M37" size="4" maxlength="4" onblur="document.Memory.M37.value=format(document.Memory.M37.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -398,7 +398,7 @@
 														<font size="3"><b>38:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M38" size="4" maxlength="4" onblur="document.Memory.M38.value=stripNpad(document.Memory.M38.value);"></input>
+														<input type="TEXT" name="M38" size="4" maxlength="4" onblur="document.Memory.M38.value=format(document.Memory.M38.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -406,7 +406,7 @@
 														<font size="3"><b>39:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M39" size="4" maxlength="4" onblur="document.Memory.M39.value=stripNpad(document.Memory.M39.value);"></input>
+														<input type="TEXT" name="M39" size="4" maxlength="4" onblur="document.Memory.M39.value=format(document.Memory.M39.value);"></input>
 													</td>
 												</tr>
 											</table>
@@ -418,7 +418,7 @@
 														<font size="3"><b>40:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M40" size="4" maxlength="4" onblur="document.Memory.M40.value=stripNpad(document.Memory.M40.value);"></input>
+														<input type="TEXT" name="M40" size="4" maxlength="4" onblur="document.Memory.M40.value=format(document.Memory.M40.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -426,7 +426,7 @@
 														<font size="3"><b>41:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M41" size="4" maxlength="4" onblur="document.Memory.M41.value=stripNpad(document.Memory.M41.value);"></input>
+														<input type="TEXT" name="M41" size="4" maxlength="4" onblur="document.Memory.M41.value=format(document.Memory.M41.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -434,7 +434,7 @@
 														<font size="3"><b>42:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M42" size="4" maxlength="4" onblur="document.Memory.M42.value=stripNpad(document.Memory.M42.value);"></input>
+														<input type="TEXT" name="M42" size="4" maxlength="4" onblur="document.Memory.M42.value=format(document.Memory.M42.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -442,7 +442,7 @@
 														<font size="3"><b>43:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M43" size="4" maxlength="4" onblur="document.Memory.M43.value=stripNpad(document.Memory.M43.value);"></input>
+														<input type="TEXT" name="M43" size="4" maxlength="4" onblur="document.Memory.M43.value=format(document.Memory.M43.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -450,7 +450,7 @@
 														<font size="3"><b>44:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M44" size="4" maxlength="4" onblur="document.Memory.M44.value=stripNpad(document.Memory.M44.value);"></input>
+														<input type="TEXT" name="M44" size="4" maxlength="4" onblur="document.Memory.M44.value=format(document.Memory.M44.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -458,7 +458,7 @@
 														<font size="3"><b>45:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M45" size="4" maxlength="4" onblur="document.Memory.M45.value=stripNpad(document.Memory.M45.value);"></input>
+														<input type="TEXT" name="M45" size="4" maxlength="4" onblur="document.Memory.M45.value=format(document.Memory.M45.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -466,7 +466,7 @@
 														<font size="3"><b>46:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M46" size="4" maxlength="4" onblur="document.Memory.M46.value=stripNpad(document.Memory.M46.value);"></input>
+														<input type="TEXT" name="M46" size="4" maxlength="4" onblur="document.Memory.M46.value=format(document.Memory.M46.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -474,7 +474,7 @@
 														<font size="3"><b>47:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M47" size="4" maxlength="4" onblur="document.Memory.M47.value=stripNpad(document.Memory.M47.value);"></input>
+														<input type="TEXT" name="M47" size="4" maxlength="4" onblur="document.Memory.M47.value=format(document.Memory.M47.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -482,7 +482,7 @@
 														<font size="3"><b>48:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M48" size="4" maxlength="4" onblur="document.Memory.M48.value=stripNpad(document.Memory.M48.value);"></input>
+														<input type="TEXT" name="M48" size="4" maxlength="4" onblur="document.Memory.M48.value=format(document.Memory.M48.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -490,7 +490,7 @@
 														<font size="3"><b>49:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M49" size="4" maxlength="4" onblur="document.Memory.M49.value=stripNpad(document.Memory.M49.value);"></input>
+														<input type="TEXT" name="M49" size="4" maxlength="4" onblur="document.Memory.M49.value=format(document.Memory.M49.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -498,7 +498,7 @@
 														<font size="3"><b>50:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M50" size="4" maxlength="4" onblur="document.Memory.M50.value=stripNpad(document.Memory.M50.value);"></input>
+														<input type="TEXT" name="M50" size="4" maxlength="4" onblur="document.Memory.M50.value=format(document.Memory.M50.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -506,7 +506,7 @@
 														<font size="3"><b>51:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M51" size="4" maxlength="4" onblur="document.Memory.M51.value=stripNpad(document.Memory.M51.value);"></input>
+														<input type="TEXT" name="M51" size="4" maxlength="4" onblur="document.Memory.M51.value=format(document.Memory.M51.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -514,7 +514,7 @@
 														<font size="3"><b>52:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M52" size="4" maxlength="4" onblur="document.Memory.M52.value=stripNpad(document.Memory.M52.value);"></input>
+														<input type="TEXT" name="M52" size="4" maxlength="4" onblur="document.Memory.M52.value=format(document.Memory.M52.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -522,7 +522,7 @@
 														<font size="3"><b>53:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M53" size="4" maxlength="4" onblur="document.Memory.M53.value=stripNpad(document.Memory.M53.value);"></input>
+														<input type="TEXT" name="M53" size="4" maxlength="4" onblur="document.Memory.M53.value=format(document.Memory.M53.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -530,7 +530,7 @@
 														<font size="3"><b>54:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M54" size="4" maxlength="4" onblur="document.Memory.M54.value=stripNpad(document.Memory.M54.value);"></input>
+														<input type="TEXT" name="M54" size="4" maxlength="4" onblur="document.Memory.M54.value=format(document.Memory.M54.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -538,7 +538,7 @@
 														<font size="3"><b>55:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M55" size="4" maxlength="4" onblur="document.Memory.M55.value=stripNpad(document.Memory.M55.value);"></input>
+														<input type="TEXT" name="M55" size="4" maxlength="4" onblur="document.Memory.M55.value=format(document.Memory.M55.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -546,7 +546,7 @@
 														<font size="3"><b>56:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M56" size="4" maxlength="4" onblur="document.Memory.M56.value=stripNpad(document.Memory.M56.value);"></input>
+														<input type="TEXT" name="M56" size="4" maxlength="4" onblur="document.Memory.M56.value=format(document.Memory.M56.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -554,7 +554,7 @@
 														<font size="3"><b>57:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M57" size="4" maxlength="4" onblur="document.Memory.M57.value=stripNpad(document.Memory.M57.value);"></input>
+														<input type="TEXT" name="M57" size="4" maxlength="4" onblur="document.Memory.M57.value=format(document.Memory.M57.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -562,7 +562,7 @@
 														<font size="3"><b>58:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M58" size="4" maxlength="4" onblur="document.Memory.M58.value=stripNpad(document.Memory.M58.value);"></input>
+														<input type="TEXT" name="M58" size="4" maxlength="4" onblur="document.Memory.M58.value=format(document.Memory.M58.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -570,7 +570,7 @@
 														<font size="3"><b>59:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M59" size="4" maxlength="4" onblur="document.Memory.M59.value=stripNpad(document.Memory.M59.value);"></input>
+														<input type="TEXT" name="M59" size="4" maxlength="4" onblur="document.Memory.M59.value=format(document.Memory.M59.value);"></input>
 													</td>
 												</tr>
 											</table>
@@ -582,7 +582,7 @@
 														<font size="3"><b>60:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M60" size="4" maxlength="4" onblur="document.Memory.M60.value=stripNpad(document.Memory.M60.value);"></input>
+														<input type="TEXT" name="M60" size="4" maxlength="4" onblur="document.Memory.M60.value=format(document.Memory.M60.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -590,7 +590,7 @@
 														<font size="3"><b>61:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M61" size="4" maxlength="4" onblur="document.Memory.M61.value=stripNpad(document.Memory.M61.value);"></input>
+														<input type="TEXT" name="M61" size="4" maxlength="4" onblur="document.Memory.M61.value=format(document.Memory.M61.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -598,7 +598,7 @@
 														<font size="3"><b>62:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M62" size="4" maxlength="4" onblur="document.Memory.M62.value=stripNpad(document.Memory.M62.value);"></input>
+														<input type="TEXT" name="M62" size="4" maxlength="4" onblur="document.Memory.M62.value=format(document.Memory.M62.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -606,7 +606,7 @@
 														<font size="3"><b>63:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M63" size="4" maxlength="4" onblur="document.Memory.M63.value=stripNpad(document.Memory.M63.value);"></input>
+														<input type="TEXT" name="M63" size="4" maxlength="4" onblur="document.Memory.M63.value=format(document.Memory.M63.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -614,7 +614,7 @@
 														<font size="3"><b>64:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M64" size="4" maxlength="4" onblur="document.Memory.M64.value=stripNpad(document.Memory.M64.value);"></input>
+														<input type="TEXT" name="M64" size="4" maxlength="4" onblur="document.Memory.M64.value=format(document.Memory.M64.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -622,7 +622,7 @@
 														<font size="3"><b>65:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M65" size="4" maxlength="4" onblur="document.Memory.M65.value=stripNpad(document.Memory.M65.value);"></input>
+														<input type="TEXT" name="M65" size="4" maxlength="4" onblur="document.Memory.M65.value=format(document.Memory.M65.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -630,7 +630,7 @@
 														<font size="3"><b>66:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M66" size="4" maxlength="4" onblur="document.Memory.M66.value=stripNpad(document.Memory.M66.value);"></input>
+														<input type="TEXT" name="M66" size="4" maxlength="4" onblur="document.Memory.M66.value=format(document.Memory.M66.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -638,7 +638,7 @@
 														<font size="3"><b>67:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M67" size="4" maxlength="4" onblur="document.Memory.M67.value=stripNpad(document.Memory.M67.value);"></input>
+														<input type="TEXT" name="M67" size="4" maxlength="4" onblur="document.Memory.M67.value=format(document.Memory.M67.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -646,7 +646,7 @@
 														<font size="3"><b>68:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M68" size="4" maxlength="4" onblur="document.Memory.M68.value=stripNpad(document.Memory.M68.value);"></input>
+														<input type="TEXT" name="M68" size="4" maxlength="4" onblur="document.Memory.M68.value=format(document.Memory.M68.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -654,7 +654,7 @@
 														<font size="3"><b>69:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M69" size="4" maxlength="4" onblur="document.Memory.M69.value=stripNpad(document.Memory.M69.value);"></input>
+														<input type="TEXT" name="M69" size="4" maxlength="4" onblur="document.Memory.M69.value=format(document.Memory.M69.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -662,7 +662,7 @@
 														<font size="3"><b>70:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M70" size="4" maxlength="4" onblur="document.Memory.M70.value=stripNpad(document.Memory.M70.value);"></input>
+														<input type="TEXT" name="M70" size="4" maxlength="4" onblur="document.Memory.M70.value=format(document.Memory.M70.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -670,7 +670,7 @@
 														<font size="3"><b>71:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M71" size="4" maxlength="4" onblur="document.Memory.M71.value=stripNpad(document.Memory.M71.value);"></input>
+														<input type="TEXT" name="M71" size="4" maxlength="4" onblur="document.Memory.M71.value=format(document.Memory.M71.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -678,7 +678,7 @@
 														<font size="3"><b>72:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M72" size="4" maxlength="4" onblur="document.Memory.M72.value=stripNpad(document.Memory.M72.value);"></input>
+														<input type="TEXT" name="M72" size="4" maxlength="4" onblur="document.Memory.M72.value=format(document.Memory.M72.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -686,7 +686,7 @@
 														<font size="3"><b>73:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M73" size="4" maxlength="4" onblur="document.Memory.M73.value=stripNpad(document.Memory.M73.value);"></input>
+														<input type="TEXT" name="M73" size="4" maxlength="4" onblur="document.Memory.M73.value=format(document.Memory.M73.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -694,7 +694,7 @@
 														<font size="3"><b>74:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M74" size="4" maxlength="4" onblur="document.Memory.M74.value=stripNpad(document.Memory.M74.value);"></input>
+														<input type="TEXT" name="M74" size="4" maxlength="4" onblur="document.Memory.M74.value=format(document.Memory.M74.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -702,7 +702,7 @@
 														<font size="3"><b>75:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M75" size="4" maxlength="4" onblur="document.Memory.M75.value=stripNpad(document.Memory.M75.value);"></input>
+														<input type="TEXT" name="M75" size="4" maxlength="4" onblur="document.Memory.M75.value=format(document.Memory.M75.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -710,7 +710,7 @@
 														<font size="3"><b>76:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M76" size="4" maxlength="4" onblur="document.Memory.M76.value=stripNpad(document.Memory.M76.value);"></input>
+														<input type="TEXT" name="M76" size="4" maxlength="4" onblur="document.Memory.M76.value=format(document.Memory.M76.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -718,7 +718,7 @@
 														<font size="3"><b>77:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M77" size="4" maxlength="4" onblur="document.Memory.M77.value=stripNpad(document.Memory.M77.value);"></input>
+														<input type="TEXT" name="M77" size="4" maxlength="4" onblur="document.Memory.M77.value=format(document.Memory.M77.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -726,7 +726,7 @@
 														<font size="3"><b>78:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M78" size="4" maxlength="4" onblur="document.Memory.M78.value=stripNpad(document.Memory.M78.value);"></input>
+														<input type="TEXT" name="M78" size="4" maxlength="4" onblur="document.Memory.M78.value=format(document.Memory.M78.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -734,7 +734,7 @@
 														<font size="3"><b>79:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M79" size="4" maxlength="4" onblur="document.Memory.M79.value=stripNpad(document.Memory.M79.value);"></input>
+														<input type="TEXT" name="M79" size="4" maxlength="4" onblur="document.Memory.M79.value=format(document.Memory.M79.value);"></input>
 													</td>
 												</tr>
 											</table>
@@ -746,7 +746,7 @@
 														<font size="3"><b>80:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M80" size="4" maxlength="4" onblur="document.Memory.M80.value=stripNpad(document.Memory.M80.value);"></input>
+														<input type="TEXT" name="M80" size="4" maxlength="4" onblur="document.Memory.M80.value=format(document.Memory.M80.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -754,7 +754,7 @@
 														<font size="3"><b>81:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M81" size="4" maxlength="4" onblur="document.Memory.M81.value=stripNpad(document.Memory.M81.value);"></input>
+														<input type="TEXT" name="M81" size="4" maxlength="4" onblur="document.Memory.M81.value=format(document.Memory.M81.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -762,7 +762,7 @@
 														<font size="3"><b>82:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M82" size="4" maxlength="4" onblur="document.Memory.M82.value=stripNpad(document.Memory.M82.value);"></input>
+														<input type="TEXT" name="M82" size="4" maxlength="4" onblur="document.Memory.M82.value=format(document.Memory.M82.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -770,7 +770,7 @@
 														<font size="3"><b>83:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M83" size="4" maxlength="4" onblur="document.Memory.M83.value=stripNpad(document.Memory.M83.value);"></input>
+														<input type="TEXT" name="M83" size="4" maxlength="4" onblur="document.Memory.M83.value=format(document.Memory.M83.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -778,7 +778,7 @@
 														<font size="3"><b>84:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M84" size="4" maxlength="4" onblur="document.Memory.M84.value=stripNpad(document.Memory.M84.value);"></input>
+														<input type="TEXT" name="M84" size="4" maxlength="4" onblur="document.Memory.M84.value=format(document.Memory.M84.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -786,7 +786,7 @@
 														<font size="3"><b>85:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M85" size="4" maxlength="4" onblur="document.Memory.M85.value=stripNpad(document.Memory.M85.value);"></input>
+														<input type="TEXT" name="M85" size="4" maxlength="4" onblur="document.Memory.M85.value=format(document.Memory.M85.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -794,7 +794,7 @@
 														<font size="3"><b>86:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M86" size="4" maxlength="4" onblur="document.Memory.M86.value=stripNpad(document.Memory.M86.value);"></input>
+														<input type="TEXT" name="M86" size="4" maxlength="4" onblur="document.Memory.M86.value=format(document.Memory.M86.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -802,7 +802,7 @@
 														<font size="3"><b>87:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M87" size="4" maxlength="4" onblur="document.Memory.M87.value=stripNpad(document.Memory.M87.value);"></input>
+														<input type="TEXT" name="M87" size="4" maxlength="4" onblur="document.Memory.M87.value=format(document.Memory.M87.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -810,7 +810,7 @@
 														<font size="3"><b>88:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M88" size="4" maxlength="4" onblur="document.Memory.M88.value=stripNpad(document.Memory.M88.value);"></input>
+														<input type="TEXT" name="M88" size="4" maxlength="4" onblur="document.Memory.M88.value=format(document.Memory.M88.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -818,7 +818,7 @@
 														<font size="3"><b>89:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M89" size="4" maxlength="4" onblur="document.Memory.M89.value=stripNpad(document.Memory.M89.value);"></input>
+														<input type="TEXT" name="M89" size="4" maxlength="4" onblur="document.Memory.M89.value=format(document.Memory.M89.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -826,7 +826,7 @@
 														<font size="3"><b>90:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M90" size="4" maxlength="4" onblur="document.Memory.M90.value=stripNpad(document.Memory.M90.value);"></input>
+														<input type="TEXT" name="M90" size="4" maxlength="4" onblur="document.Memory.M90.value=format(document.Memory.M90.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -834,7 +834,7 @@
 														<font size="3"><b>91:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M91" size="4" maxlength="4" onblur="document.Memory.M91.value=stripNpad(document.Memory.M91.value);"></input>
+														<input type="TEXT" name="M91" size="4" maxlength="4" onblur="document.Memory.M91.value=format(document.Memory.M91.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -842,7 +842,7 @@
 														<font size="3"><b>92:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M92" size="4" maxlength="4" onblur="document.Memory.M92.value=stripNpad(document.Memory.M92.value);"></input>
+														<input type="TEXT" name="M92" size="4" maxlength="4" onblur="document.Memory.M92.value=format(document.Memory.M92.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -850,7 +850,7 @@
 														<font size="3"><b>93:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M93" size="4" maxlength="4" onblur="document.Memory.M93.value=stripNpad(document.Memory.M93.value);"></input>
+														<input type="TEXT" name="M93" size="4" maxlength="4" onblur="document.Memory.M93.value=format(document.Memory.M93.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -858,7 +858,7 @@
 														<font size="3"><b>94:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M94" size="4" maxlength="4" onblur="document.Memory.M94.value=stripNpad(document.Memory.M94.value);"></input>
+														<input type="TEXT" name="M94" size="4" maxlength="4" onblur="document.Memory.M94.value=format(document.Memory.M94.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -866,7 +866,7 @@
 														<font size="3"><b>95:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M95" size="4" maxlength="4" onblur="document.Memory.M95.value=stripNpad(document.Memory.M95.value);"></input>
+														<input type="TEXT" name="M95" size="4" maxlength="4" onblur="document.Memory.M95.value=format(document.Memory.M95.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -874,7 +874,7 @@
 														<font size="3"><b>96:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M96" size="4" maxlength="4" onblur="document.Memory.M96.value=stripNpad(document.Memory.M96.value);"></input>
+														<input type="TEXT" name="M96" size="4" maxlength="4" onblur="document.Memory.M96.value=format(document.Memory.M96.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -882,7 +882,7 @@
 														<font size="3"><b>97:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M97" size="4" maxlength="4" onblur="document.Memory.M97.value=stripNpad(document.Memory.M97.value);"></input>
+														<input type="TEXT" name="M97" size="4" maxlength="4" onblur="document.Memory.M97.value=format(document.Memory.M97.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -890,7 +890,7 @@
 														<font size="3"><b>98:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M98" size="4" maxlength="4" onblur="document.Memory.M98.value=stripNpad(document.Memory.M98.value);"></input>
+														<input type="TEXT" name="M98" size="4" maxlength="4" onblur="document.Memory.M98.value=format(document.Memory.M98.value);"></input>
 													</td>
 												</tr>
 												<tr>
@@ -898,7 +898,7 @@
 														<font size="3"><b>99:</b></font>
 													</td>
 													<td>
-														<input type="TEXT" name="M99" size="4" maxlength="4" onblur="document.Memory.M99.value=stripNpad(document.Memory.M99.value);"></input>
+														<input type="TEXT" name="M99" size="4" maxlength="4" onblur="document.Memory.M99.value=format(document.Memory.M99.value);"></input>
 													</td>
 												</tr>
 											</table>
@@ -921,7 +921,7 @@
 							<td align="CENTER">
 								<font size="3"><b>Input&nbsp;Cards</b><br>
 									<font size="2">
-										<input type="BUTTON" value="Reset" onclick="resetInput();"><input type="RESET" value="Clear" onclick="resetInput();"></input></font><br>
+										<input type="RESET" value="Clear" onclick="resetInput();"></input></font><br>
 								</font>
 							</td>
 						</tr>
@@ -933,7 +933,7 @@
 											<font size="3"><b>01:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I01" size="4" maxlength="4" onblur="document.Input.I01.value=stripNpad(document.Input.I01.value);"></input>
+											<input type="TEXT" name="I01" size="4" maxlength="4" onblur="document.Input.I01.value=format(document.Input.I01.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -941,7 +941,7 @@
 											<font size="3"><b>02:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I02" size="4" maxlength="4" onblur="document.Input.I02.value=stripNpad(document.Input.I02.value);"></input>
+											<input type="TEXT" name="I02" size="4" maxlength="4" onblur="document.Input.I02.value=format(document.Input.I02.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -949,7 +949,7 @@
 											<font size="3"><b>03:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I03" size="4" maxlength="4" onblur="document.Input.I03.value=stripNpad(document.Input.I03.value);"></input>
+											<input type="TEXT" name="I03" size="4" maxlength="4" onblur="document.Input.I03.value=format(document.Input.I03.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -957,7 +957,7 @@
 											<font size="3"><b>04:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I04" size="4" maxlength="4" onblur="document.Input.I04.value=stripNpad(document.Input.I04.value);"></input>
+											<input type="TEXT" name="I04" size="4" maxlength="4" onblur="document.Input.I04.value=format(document.Input.I04.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -965,7 +965,7 @@
 											<font size="3"><b>05:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I05" size="4" maxlength="4" onblur="document.Input.I05.value=stripNpad(document.Input.I05.value);"></input>
+											<input type="TEXT" name="I05" size="4" maxlength="4" onblur="document.Input.I05.value=format(document.Input.I05.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -973,7 +973,7 @@
 											<font size="3"><b>06:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I06" size="4" maxlength="4" onblur="document.Input.I06.value=stripNpad(document.Input.I06.value);"></input>
+											<input type="TEXT" name="I06" size="4" maxlength="4" onblur="document.Input.I06.value=format(document.Input.I06.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -981,7 +981,7 @@
 											<font size="3"><b>07:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I07" size="4" maxlength="4" onblur="document.Input.I07.value=stripNpad(document.Input.I07.value);"></input>
+											<input type="TEXT" name="I07" size="4" maxlength="4" onblur="document.Input.I07.value=format(document.Input.I07.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -989,7 +989,7 @@
 											<font size="3"><b>08:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I08" size="4" maxlength="4" onblur="document.Input.I08.value=stripNpad(document.Input.I08.value);"></input>
+											<input type="TEXT" name="I08" size="4" maxlength="4" onblur="document.Input.I08.value=format(document.Input.I08.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -997,7 +997,7 @@
 											<font size="3"><b>09:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I09" size="4" maxlength="4" onblur="document.Input.I09.value=stripNpad(document.Input.I09.value);"></input>
+											<input type="TEXT" name="I09" size="4" maxlength="4" onblur="document.Input.I09.value=format(document.Input.I09.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -1005,7 +1005,7 @@
 											<font size="3"><b>10:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I10" size="4" maxlength="4" onblur="document.Input.I10.value=stripNpad(document.Input.I10.value);"></input>
+											<input type="TEXT" name="I10" size="4" maxlength="4" onblur="document.Input.I10.value=format(document.Input.I10.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -1013,7 +1013,7 @@
 											<font size="3"><b>11:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I11" size="4" maxlength="4" onblur="document.Input.I11.value=stripNpad(document.Input.I11.value);"></input>
+											<input type="TEXT" name="I11" size="4" maxlength="4" onblur="document.Input.I11.value=format(document.Input.I11.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -1021,7 +1021,7 @@
 											<font size="3"><b>12:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I12" size="4" maxlength="4" onblur="document.Input.I12.value=stripNpad(document.Input.I12.value);"></input>
+											<input type="TEXT" name="I12" size="4" maxlength="4" onblur="document.Input.I12.value=format(document.Input.I12.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -1029,7 +1029,7 @@
 											<font size="3"><b>13:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I13" size="4" maxlength="4" onblur="document.Input.I13.value=stripNpad(document.Input.I13.value);"></input>
+											<input type="TEXT" name="I13" size="4" maxlength="4" onblur="document.Input.I13.value=format(document.Input.I13.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -1037,7 +1037,7 @@
 											<font size="3"><b>14:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I14" size="4" maxlength="4" onblur="document.Input.I14.value=stripNpad(document.Input.I14.value);"></input>
+											<input type="TEXT" name="I14" size="4" maxlength="4" onblur="document.Input.I14.value=format(document.Input.I14.value);"></input>
 										</td>
 									</tr>
 									<tr>
@@ -1045,7 +1045,7 @@
 											<font size="3"><b>15:</b></font>
 										</td>
 										<td>
-											<input type="TEXT" name="I15" size="4" maxlength="4" onblur="document.Input.I15.value=stripNpad(document.Input.I15.value);"></input>
+											<input type="TEXT" name="I15" size="4" maxlength="4" onblur="document.Input.I15.value=format(document.Input.I15.value);"></input>
 										</td>
 									</tr>
 								</table>

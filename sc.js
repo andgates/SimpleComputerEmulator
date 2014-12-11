@@ -64,7 +64,7 @@ function decode(){
 };
 
 function execute(){
-	if(opCode=="0"){return INP(operand);};
+	if(opCode=="0"){return input(operand);};
 	if(opCode=="1"){return OUT(operand);};
 	if(opCode=="2"){return ADD(operand);};
 	if(opCode=="3"){return SUB(operand);};
@@ -77,7 +77,12 @@ function execute(){
 	return 1;
 };
 
-function INP(operand){
+/* 
+Function Input:
+	Loads the value of the current input card into the memory cell specified in the operand.
+	The input function is called when opCode = 0.
+*/
+function input(operand){
 	In = document.Input["I"+inCardNo].value;
 	if (In.length <4) {
 		alert('Execution Halted: Input card is empty.');
@@ -110,7 +115,7 @@ function ADD(operand){
 			document.CPU.CARRY.value = "0";
 		};
 	};
-	document.CPU.AC.value = stripNpad(sum.toString());
+	document.CPU.AC.value = format(sum.toString());
 	return 0;
 };
 
@@ -127,7 +132,7 @@ function SUB(operand){
 			document.CPU.CARRY.value = "0";
 		};
 	};
-	document.CPU.AC.value = stripNpad(diff.toString());
+	document.CPU.AC.value = format(diff.toString());
 	return 0;
 };
 
@@ -189,50 +194,65 @@ function HLT(operand){
 	return 1;
 };
 
-function stripNpad(cellvalue){
-	cellvalue = cellvalue.split(' ').join('');
-	if(cellvalue.length >0){
-		strippedvalue = cellvalue;
+/* 
+Function Format:
+	Formats any given value (memory, input, AC, IC, or other) to the strict three digit decimal
+	format required by the simple computer.
+*/
+function format(value){
+	// Remove spaces
+	value = value.split(' ').join('');
+	// If the value is greater than zero, assign to temp for further processing
+	if(value.length >0){
+		temp = value;
+	// Else return a blank value
 	} else {
 		return '';
 	};
-	for (i=0; i<cellvalue.length; i++){
-		if(((cellvalue.charAt(i)!='-') || i!=0) && ((cellvalue.charAt(i) >'9') || (cellvalue.charAt(i) <'0'))){
-			strippedvalue = strippedvalue.split(cellvalue.charAt(i)).join('0');
+	for (i=0; i<value.length; i++){
+		if(((value.charAt(i)!='-') || i!=0) && ((value.charAt(i) >'9') || (value.charAt(i) <'0'))){
+			temp = temp.split(value.charAt(i)).join('0');
 		};
 	};
-	if(strippedvalue.length<4){
-		if(strippedvalue.charAt(0)=='-'){
-			strippedvalue = strippedvalue.substring(1,strippedvalue.length);
-			if(strippedvalue.length==1){paddedvalue="-00"+strippedvalue;};
-			if(strippedvalue.length==2){paddedvalue="-0"+strippedvalue;};
+	if(temp.length<4){
+		if(temp.charAt(0)=='-'){
+			temp = temp.substring(1,temp.length);
+			if(temp.length==1){
+			formattedvalue="-00"+temp;
+			};
+			if(temp.length==2){
+			formattedvalue="-0"+temp;
+			};
 		} else {
-			if(strippedvalue.length==1){paddedvalue=" 00"+strippedvalue;};
-			if(strippedvalue.length==2){paddedvalue=" 0"+strippedvalue;};
-			if(strippedvalue.length==3){paddedvalue=" "+strippedvalue;};
+			if(temp.length==1){
+			formattedvalue=" 00"+temp;
+			};
+			if(temp.length==2){
+			formattedvalue=" 0"+temp;
+			};
+			if(temp.length==3){
+			formattedvalue=" "+temp;
+			};
 		};
 	} else {
-		if(strippedvalue.charAt(0)=='-'){
-			paddedvalue = strippedvalue;
+		if(temp.charAt(0)=='-'){
+			formattedvalue = temp;
 		} else {
-			paddedvalue = " " + strippedvalue.substring(1,4);
+			formattedvalue = " " + temp.substring(1,4);
 		};
 	};
-	return paddedvalue;
+	return formattedvalue;
 };
 
-function stripNpadPC(cellvalue){
-	if(cellvalue.length >0){
-		if(cellvalue.length<2) cellvalue = "0" + cellvalue;
-		if((cellvalue.charAt(0) >'9') || (cellvalue.charAt(0) <'0')) cellvalue = '0' + cellvalue.charAt(1);
-		if((cellvalue.charAt(1) >'9') || (cellvalue.charAt(1) <'0')) cellvalue = cellvalue.charAt(0) + '0';
+function formatPC(value){
+	if(value.length >0){
+		if(value.length<2) value = "0" + value;
+		if((value.charAt(0) >'9') || (value.charAt(0) <'0')) value = '0' + value.charAt(1);
+		if((value.charAt(1) >'9') || (value.charAt(1) <'0')) value = value.charAt(0) + '0';
 	} else {
-		cellvalue = '00';
+		value = '00';
 	};
-	return cellvalue;
-};
-
-function clearCPU(){
+	return value;
 };
 
 function resetInput(){
@@ -244,7 +264,6 @@ function clearOutput(){
 };
 
 function clearAll(){
-	clearCPU();
 	document.CPU.reset();
 	document.Memory.reset();
 	resetInput();
@@ -253,10 +272,11 @@ function clearAll(){
 	document.Output.reset();
 };
 
-function listfiles(){
+function fileLoader(){
 	lastindex = self.location.href.lastIndexOf("/");
 	programURL = self.location.href.substring(0,lastindex+1);
-	listfilespage = 
+	loaderHTML = 
+		"<!DOCTYPE html>"+
 		"<HTML>"+
 			"<HEAD>"+
 				"<TITLE>Files</TITLE>"+
@@ -277,7 +297,7 @@ function listfiles(){
 				"</FORM>"+
 			"</BODY>"+
 		"</HTML>";
-	filewindow = window.open('javascript:opener.listfilespage','files','width=400,height=250');
+	filewindow = window.open('javascript:opener.loaderHTML','files','width=400,height=250');
 	filewindow.focus();
 	filewindow.DC=self;
 };
@@ -305,7 +325,7 @@ function savefile(){
 	savefilepage=
 		"<HTML>"+
 			"<HEAD>"+
-				"<TITLE>DC Program</TITLE>"+
+				"<TITLE>Simple Computer Program</TITLE>"+
 				"<SCRIPT LANGUAGE='JavaScript'>"+
 					"Memory = new Array(";
 	for (i=1;i<=98;i++){
