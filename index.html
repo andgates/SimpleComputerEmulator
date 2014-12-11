@@ -26,25 +26,11 @@
 	
 		<div id="leftConatiner">
 			<form name="CPU">
-			<table width="260" cellpadding="5" cellspacing="0">
-				<tr>
-					<td align="CENTER">
-						<b>Central Processing Unit</b>
-					</td>
-				</tr>
-				<tr>
-					<td align="CENTER">
-						<input type="RESET" value="Clear">
-						<input type="BUTTON" value="Clear All" onclick="clearAll();">
-					</td>
-				</tr>
-				<tr>
-					<td align="CENTER" colspan="2">
-						<b>AC&nbsp;<input type="TEXT" name="CARRY" size="1" maxlength="1" onfocus="assignedValue=document.CPU.CARRY.value;" onblur="document.CPU.CARRY.value=assignedValue;"><input type="TEXT" name="AC" size="4" maxlength="4" onfocus="assignedValue=document.CPU.AC.value;" onblur="document.CPU.AC.value=assignedValue;"></input>&nbsp;&nbsp;IR&nbsp;<input type="TEXT" name="IR" size="4" maxlength="4" onfocus="assignedValue=document.CPU.IR.value;" onblur="document.CPU.IR.value=assignedValue;"></input>&nbsp;&nbsp;PC&nbsp;<input type="TEXT" name="PC" size="2" maxlength="2" value="00" onblur="document.CPU.PC.value=formatPC(document.CPU.PC.value);"></input></b>
-						<input type="BUTTON" value="Step" onclick="cycle(1)"><input type="BUTTON" value="Run" onclick="cycle(100)">
-					</td>
-				</tr>
-			</table>
+				<b>Central Processing Unit</b>
+				<input type="RESET" value="Clear">
+				<input type="BUTTON" value="Clear All" onclick="clearAll();">
+				<b>AC&nbsp;<input type="TEXT" name="CARRY" size="1" maxlength="1" onfocus="assignedValue=document.CPU.CARRY.value;" onblur="document.CPU.CARRY.value=assignedValue;"><input type="TEXT" name="AC" size="4" maxlength="4" onfocus="assignedValue=document.CPU.AC.value;" onblur="document.CPU.AC.value=assignedValue;"></input>&nbsp;&nbsp;IR&nbsp;<input type="TEXT" name="IR" size="4" maxlength="4" onfocus="assignedValue=document.CPU.IR.value;" onblur="document.CPU.IR.value=assignedValue;"></input>&nbsp;&nbsp;PC&nbsp;<input type="TEXT" name="PC" size="2" maxlength="2" value="00" onblur="document.CPU.PC.value=formatPC(document.CPU.PC.value);"></input></b>
+				<input type="BUTTON" value="Step" onclick="cycle(1)"><input type="BUTTON" value="Run" onclick="cycle(100)">
 			</form>
 		</div>
 		
