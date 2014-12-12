@@ -1,10 +1,10 @@
 
 /* 
-Function Initialize: 
+Function Boot: 
 	Called on page load to initialize Program Counter, input cards, output cards,
 	and highlight images.
 */
-function initialize(){
+function boot(){
 	document.CPU.PC.value='00';
 	inCardNo="01";
 	outCardNo="01";
@@ -12,7 +12,7 @@ function initialize(){
 
 /* 
 Function Cycle: 
-	The main CPU cycle, including fetch(), decode(), and execute()
+	The main CPU cycle, consisting of fetch(), decode(), and execute()
 	Parameters:
 		N: The number of memory cells to cycle through. If the user presses step, N = 1.
 			If the user presses Run, N = 100.
@@ -57,15 +57,26 @@ function fetch(){
 	return 0;
 };
 
+/* 
+Function Decode: 
+	Separates the instruction currently in the instruction register into
+	opCode and operand.
+*/
 function decode(){
 	// Separate opCode (equivalent to opCode = IR % 100
 	opCode = IR.charAt(1);
+	// Separate operand
 	operand = IR.substring(2,4);
 	return 0;
 };
 
+/* 
+Function Execute: 
+	With fetch() and decode() completed, execute() simply matches the opCode
+	to the correct machine language code.
+*/
 function execute(){
-	if(opCode=="0"){return input(operand);};
+	if(opCode=="0"){return INP(operand);};
 	if(opCode=="1"){return OUT(operand);};
 	if(opCode=="2"){return ADD(operand);};
 	if(opCode=="3"){return SUB(operand);};
@@ -83,18 +94,23 @@ Function Input:
 	Loads the value of the current input card into the memory cell specified in the operand.
 	The input function is called when opCode = 0.
 */
-function input(operand){
-	In = document.Input["I"+inCardNo].value;
-	if (In.length <4) {
-		alert('Execution Halted: Input card is empty.');
+function INP(operand){
+	temp = document.Input["I"+inCardNo].value;
+	if (temp.length <4) {
+		alert('Erorr: Input card is empty. Try clearing input to reset.');
 		return 1;
 	};
-	document.Memory["M"+operand].value = In;
+	document.Memory["M"+operand].value = temp;
 	inCardNo++;
 	inCardNo = (inCardNo.toString().length==1? "0"+inCardNo: inCardNo.toString());
 	return 0;
 };
 
+/* 
+Function Output:
+	Fills the next available output card with the value operand.
+	The output function is called when opCode = 1.
+*/
 function OUT(operand){
 	document.Output["Out"+outCardNo].value = document.Memory["M"+operand].value;
 	outCardNo++;
@@ -102,103 +118,206 @@ function OUT(operand){
 	return 0;
 };
 
+/* 
+Function Add:
+	Adds the contents of memory at the given operand to the value of the Accumulator
+	The add function is called when opCode = 2.
+*/
 function ADD(operand){
-	// subtract zero to force type conversion.
-	sum = (document.CPU.AC.value-0) + (document.Memory["M"+operand].value-0);
+	// Store value of AC as integer
+	var currentAC = (document.CPU.AC.value-0);
+	// Store memory location specified by the operand
+	var cellToAdd = (document.Memory["M"+operand].value-0);
+	// Preform addition operation
+	var sum = currentAC + cellToAdd;
+	// Set carry flag if sum is greater than 999
 	if(sum>999){
 		document.CPU.CARRY.value = "1";
+		// Truncate sum to three digits
 		sum = sum.toString().substring(1,4) - 999;
+	// Set carry flag if sum is less than 999
 	}else{
 		if(sum<-999){
 			document.CPU.CARRY.value = "1";
+			// Truncate sum to three digits
 			sum = 999 - sum.toString().substring(2,5);
 		}else{
 			document.CPU.CARRY.value = "0";
 		};
 	};
+	// Update the value of AC text box
 	document.CPU.AC.value = format(sum.toString());
 	return 0;
 };
 
+/* 
+Function Subtract:
+	Subtracts the contents of memory at the given operand from the value of the Accumulator
+	The subtract function is called when opCode = 3.
+*/
 function SUB(operand){
-	diff = document.CPU.AC.value - document.Memory["M"+operand].value;
-	if(diff>999){
+	var currentAC = document.CPU.AC.value;
+	var cellToSub = document.Memory["M"+operand].value;
+	// Preform subtraction operation
+	var difference = currentAC - cellToSub;
+	// Set carry flag if necessary
+	if(difference>999){
 		document.CPU.CARRY.value = "1";
-		diff = diff.toString().substring(1,4) - 999;
+		difference = difference.toString().substring(1,4) - 999;
 	}else{
-		if(diff<-999){
+		if(difference<-999){
 			document.CPU.CARRY.value = "1";
-			diff = 999 - diff.toString().substring(2,5);
+			difference = 999 - difference.toString().substring(2,5);
 		}else{
 			document.CPU.CARRY.value = "0";
 		};
 	};
-	document.CPU.AC.value = format(diff.toString());
+	// Update the value of AC text box
+	document.CPU.AC.value = format(difference.toString());
 	return 0;
 };
 
+/* 
+Function Load:
+	Loads the memory location at operand into the AC
+	The Load function is called when opCode = 4.
+*/
 function LDA(operand){
+	// Reset the carry flag
 	document.CPU.CARRY.value = "0";
+	// Replace the value in AC with the contents of memory location at operand
 	document.CPU.AC.value = document.Memory["M"+operand].value;
 	return 0;
 };
 
+/* 
+Function Store:
+	Stores the AC in the memory location specified by operand.
+	The Store function is called when opCode = 5.
+*/
 function STA(operand){
 	document.Memory["M"+operand].value = document.CPU.AC.value;
 	return 0;
 };
 
+/* 
+Function Jump:
+	Stores the current value of PC in cell 99 then jumps the PC to operand
+	The jump function is called when opCode = 6.
+*/
 function JMP(operand){
+	// Store PC value in memory cell 99
 	document.Memory["M99"].value = " 0" + document.CPU.PC.value;
+	// Set PC to operand
 	document.CPU.PC.value = operand;
 	return 0;
 };
 
+/* 
+Function Test Accumulator:
+	Jumps only if the current value of the AC is negative.
+	The TAC function is called when opCode = 7.
+*/
 function TAC(operand){
+	// Is AC less than zero?
 	if(document.CPU.AC.value < 0){
+		// Set PC to operand
 		document.CPU.PC.value = operand;
 	};
+	// If AC is positive, do nothing.
 	return 0;
 };
 
+/* 
+Function Shift(xy):
+	Shifts the AC left x digits and then the result right y digits.
+	The SHF function is called when opCode = 8.
+*/
 function SHF(XY){
-	x = XY.charAt(0);
-	y = XY.charAt(1);
+	// First digit of operand is x
+	var x = XY.charAt(0);
+	// Second digit of operand is y
+	var y = XY.charAt(1);
+	
 	if(x!=0 || y!=0){
+		var index;
+		var ac1;
+		var ac2;
+		var ac3;
+		var magnitude;
+		var sign;
+		
 		if(x!=0){
 			index = x;
-			document.CPU.CARRY.value = (x<4? document.CPU.AC.value.charAt(index): '0');
-			AC1 = (x<3? document.CPU.AC.value.charAt(++index): '0');
-			AC2 = (x<2? document.CPU.AC.value.charAt(++index): '0');
-			AC3 = '0';
-			magnitude = AC1 + AC2 + AC3;
+			if (x<4){
+				document.CPU.CARRY.value = document.CPU.AC.value.charAt(index);
+			}else{
+				document.CPU.CARRY.value = '0';
+			};
+			if (x<3){
+				ac1 = document.CPU.AC.value.charAt(++index);
+			}else{
+				ac1 = '0';
+			};
+			if (x<2){
+				ac2 = document.CPU.AC.value.charAt(++index);
+			}else{
+				ac2 = '0';
+			};
+			ac3 = '0';
+			magnitude = ac1 + ac2 + ac3;
 			document.CPU.AC.value = document.CPU.AC.value.charAt(0) + magnitude;
 		};
 		if(y!=0){
 			index = 3-y;
-			AC3 = (y<3? document.CPU.AC.value.charAt(index): (y==3? document.CPU.CARRY.value: '0'));
-			AC2 = (y<2? document.CPU.AC.value.charAt(--index): (y==2? document.CPU.CARRY.value: '0'));
-			AC1 = (y<2? document.CPU.CARRY.value: '0');
+			if (y<3){
+				ac3 = document.CPU.AC.value.charAt(index);
+			}else if(y==3){
+				ac3 = document.CPU.CARRY.value;
+			}else{
+				ac3 = '0';
+			};
+			if (y<2){
+				ac2 = document.CPU.AC.value.charAt(--index);
+			}else if(y==2){
+				ac2 = document.CPU.CARRY.value;
+			}else{
+				ac2 = '0';
+			};
+			if (y<2){
+				ac1 = document.CPU.CARRY.value;
+			}else{
+				ac1 = '0';
+			};
 			document.CPU.CARRY.value = '0';
-			magnitude = AC1 + AC2 + AC3;
+			magnitude = ac1 + ac2 + ac3;
 		};
-		sign = (magnitude =='000'? ' ': document.CPU.AC.value.charAt(0));
+		if (magnitude == '000'){
+			sign = ' ';
+		}else{
+			sign = document.CPU.AC.value.charAt(0);
+		}
+		// Update AC value
 		document.CPU.AC.value = sign + magnitude;
 	};
 	return 0;
 };
 
+/* 
+Function Halt:
+	Replace the value of the program counter with operand and halt the simple computer.
+	The HLT function is called when opCode = 9.
+*/
 function HLT(operand){
 	document.CPU.PC.value = operand;
 	resetInput();
-	alert('Program terminated normally');
+	alert('Exit Success: Program Halted Normally.');
 	return 1;
 };
 
 /* 
 Function Format:
-	Formats any given value (memory, input, AC, IC, or other) to the strict three digit decimal
-	format required by the simple computer.
+	Formats any given value (memory, input, AC, IC, or other) to make processing simpler
 */
 function format(value){
 	// Remove spaces
@@ -280,34 +399,40 @@ function fileLoader(){
 		"<!DOCTYPE html>"+
 			"<HTML>"+
 				"<HEAD>"+
-					"<TITLE>File Loader</TITLE>"+
+					"<meta charset='UTF-8'>"+
+					"<TITLE>Simple Computer Program Select</TITLE>"+
+					"<link href='"+ programURL+ "sc.css' rel='stylesheet' type='text/css'>"+
 				"</HEAD>"+
 				"<BODY>"+
+				"<CENTER>"+
+				"<br><br>"+
 					"<FORM NAME='select'>"+
-						"<INPUT TYPE=TEXT NAME='file' SIZE=40></INPUT><INPUT TYPE=BUTTON VALUE='Select' onClick='DC.selectfile();'>"+
-						"<TABLE CELLPADDING=5 CELLSPACING=0 WIDTH=100% BORDER=0>"+
-							"<TR><TD>"+ programURL+ "</TD></TR>"+
-							"<TR><TD BGCOLOR='#FFFFFF' HEIGHT=175 VALIGN=TOP>"+
-								"<A HREF='DIVISION.html' onClick=\"document.select.file.value='"+ programURL+ "DIVISION.html';return false;\">DIVISION.html</A><BR>"+
-								"<A HREF='SHIFTING.html' onClick=\"document.select.file.value='"+ programURL+ "SHIFTING.html';return false;\">SHIFTING.html</A><BR>"+
-								"<A HREF='ABSOLUTE.html' onClick=\"document.select.file.value='"+ programURL+ "ABSOLUTE.html';return false;\">ABSOLUTE.html</A><BR>"+
-								"<A HREF='BOOTSTRAP.html' onClick=\"document.select.file.value='"+ programURL+ "BOOTSTRAP.html';return false;\">BOOTSTRAP.html</A><BR>"+
-								"<A HREF='MINNUMBER.html' onClick=\"document.select.file.value='"+ programURL+ "MINNUMBER.html';return false;\">MINNUMBER.html</A><BR>"+
-								"<A HREF='myProgram.html' onClick=\"document.select.file.value='"+ programURL+ "myProgram.html';return false;\">myProgram.html</A><BR>"+
+						"<INPUT TYPE=TEXT NAME='file' value='"+ programURL+ "' SIZE=100><INPUT TYPE=BUTTON VALUE='Select File' onClick='SC.selectfile();'>"+
+						"<h3>Test Cases</h3>"+
+						"<font size='4'>"+
+						"<TABLE CELLPADDING=5 CELLSPACING=0 BORDER=0 ALIGN=CENTER>"+
+							"<TR><TD HEIGHT=175 VALIGN=TOP ALIGN=CENTER>"+
+								"<A HREF='DIVISION.html' onClick=\"document.select.file.value='"+ programURL+ "DIVISION.html';return false;\">DIVISION [Program 5]</A><BR>"+
+								"<A HREF='SHIFTING.html' onClick=\"document.select.file.value='"+ programURL+ "SHIFTING.html';return false;\">SHIFTING DIGITS [Program 6]</A><BR>"+
+								"<A HREF='ABSOLUTE.html' onClick=\"document.select.file.value='"+ programURL+ "ABSOLUTE.html';return false;\">ABSOLUTE VALUE [Program 9]</A><BR>"+
+								"<A HREF='BOOTSTRAP.html' onClick=\"document.select.file.value='"+ programURL+ "BOOTSTRAP.html';return false;\">Bootstrap the Loader</A><BR>"+
+								"<A HREF='myProgram.html' onClick=\"document.select.file.value='"+ programURL+ "myProgram.html';return false;\">TestProgram.html</A><BR>"+
 							"</TD></TR>"+
 						"</TABLE>"+
+					"</font>"+
 					"</FORM>"+
+				"</CENTER>"+
 				"</BODY>"+
 			"</HTML>";
-	filewindow = window.open('javascript:opener.loaderHTML','files','width=400,height=250');
+	filewindow = window.open('javascript:opener.loaderHTML','files');
 	filewindow.focus();
-	filewindow.DC=self;
+	filewindow.SC=self;
 };
 
 function selectfile(){
-	programwindow = window.open(filewindow.document.select.file.value,'programs','width=350,height=150,menubar');
+	programwindow = window.open(filewindow.document.select.file.value,'programs');
 	programwindow.focus();
-	programwindow.DC=self;
+	programwindow.SC=self;
 	filewindow.close();
 };
 
@@ -325,9 +450,12 @@ function loadfile(){
 
 function savefile(){
 	savefilepage=
+	"<!DOCTYPE html>"+
 		"<HTML>"+
 			"<HEAD>"+
-				"<TITLE>Simple Computer Program</TITLE>"+
+				"<meta charset='UTF-8'>"+
+				"<TITLE>Load Simple Computer Program</TITLE>"+
+				"<link href='sc.css' rel='stylesheet' type='text/css'>"+
 				"<SCRIPT LANGUAGE='JavaScript'>"+
 					"Memory = new Array(";
 	for (i=1;i<=98;i++){
@@ -344,11 +472,10 @@ function savefile(){
 				"<"+"/SCRIPT>"+
 			"</HEAD>"+
 			"<BODY>"+
+			"<br><br>"+
 				"<FORM>"+
 					"<CENTER>"+
-						"Click to <INPUT TYPE=BUTTON VALUE='Load' onClick='DC.loadfile();'></INPUT><BR>"+
-						"-- OR --<BR>"+
-						"Select \"File\", \"Save As\" from the<BR>menu to save program to disk."+
+						"<INPUT TYPE=BUTTON VALUE='Load Simple Computer Program' onClick='SC.loadfile();'></INPUT><BR>"+
 					"</CENTER>"+
 				"</FORM>"+
 			"</BODY>"+
@@ -356,13 +483,9 @@ function savefile(){
 
 	var save = new Blob([savefilepage], {type: "text/html;charset=utf-8"});
 	saveAs(save, "myProgram.html");
-		
-	//programwindow = window.open('javascript:opener.savefilepage','programs','width=300,height=150,menubar');
-	//programwindow.focus();
-	//programwindow.DC=self;
 };
 
-function help(){
-	helpwindow = window.open('help.html','help','width=500,height=400,scrollbars');
+function manual(){
+	helpwindow = window.open('manual.html','User Manual');
 	helpwindow.focus();
 };

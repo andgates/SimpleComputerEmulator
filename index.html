@@ -7,54 +7,57 @@
     <meta content="Michael" name="Author">
     <meta content="Simple Computer Emulator in JavaScript" name="Description">
 
-    <title>Antiquated Computer</title>
+    <title>Simple Computer Emulator</title>
     <script src="FileSaver.js" type="text/javascript"></script>
     <script src="sc.js" type="text/javascript"></script>
     <link href="sc.css" rel="stylesheet" type="text/css">
 </head>
 
-<body onload="initialize();">
+<body onload="boot();">
     <!--Main Container-->
-
-
     <div id="container">
         <div id="header">
             <h2>Simple Computer Emulator</h2>
-            <input onclick="fileLoader();" type="button" value="Load Program">
-            <input onclick="help();" type="button" value="User Manual">
             <input onclick="savefile();" type="button" value="Save Program">
+            <input onclick="manual();" type="button" value="User Manual">
+			<input onclick="clearAll();" type="button" value="Reset Emulator">
+			<input onclick="fileLoader();" type="button" value="Load Program">
         </div>
-
 
         <div id="CPU">
             <form id="CPU" name="CPU">
-                <h3>Central Processing Unit</h3>
-                <input type="reset" value="Clear CPU"> <input onclick=
-                "clearAll();" type="button" value="Clear All">
-                AC<input maxlength="1" name="CARRY" onblur=
+				
+                <font size=4><b>Central Processing Unit</b></font>
+				
+                <input type="reset" value="Clear CPU">
+				<div id="registers">
+                <b>AC:</b><input maxlength="1" name="CARRY" onblur=
                 "document.CPU.CARRY.value=assignedValue;" onfocus=
                 "assignedValue=document.CPU.CARRY.value;" size="1" type=
                 "text"><input maxlength="4" name="AC" onblur=
                 "document.CPU.AC.value=assignedValue;" onfocus=
                 "assignedValue=document.CPU.AC.value;" size="4" type="text">
-                IR<input maxlength="4" name="IR" onblur=
+                <b>IR:</b><input maxlength="4" name="IR" onblur=
                 "document.CPU.IR.value=assignedValue;" onfocus=
                 "assignedValue=document.CPU.IR.value;" size="4" type="text">
-                PC<input maxlength="2" name="PC" onblur=
+                <b>PC:</b><input maxlength="2" name="PC" onblur=
                 "document.CPU.PC.value=formatPC(document.CPU.PC.value);" size=
-                "2" type="text" value="00"> <input onclick="cycle(1)" type=
-                "button" value="Step"><input onclick="cycle(100)" type="button"
-                value="Run">
+                "2" type="text" value="00"> 
+				<input onclick="cycle(1)" type=
+                "button" value="Step">
+				<input onclick="cycle(100)" type="button"
+                value="Execute">
+				</div>
             </form>
         </div>
-        <!--Input Cards-->
+        
 
-
+		<!--Input Cards-->
         <div id="inputCard">
             <form id="Input" name="Input">
 			<table cellpadding="5" cellspacing="0">
                     <tr>
-                        <td align="center">Input Cards<br>
+                        <td align="center"><font size=4><b>Input Cards</b></font><br><br>
                          <input onclick="resetInput();" type="reset" value="Clear"><br></td>
                     </tr>
                     <tr>
@@ -213,17 +216,17 @@
            </td>
 		   
 
-		   </tr>
+					</tr>
 			</table>
 			</form>
         </div>
 
-
+		<!--Output Cards-->
         <div id="outputCard">
             <form id="Output" name="Output">
                 <table cellpadding="5" cellspacing="0">
                     <tr>
-                        <td align="center">Output&nbsp;Cards<br>
+                        <td align="center"><font size=4><b>Output Cards</b></font><br><br>
                         <input onclick="clearOutput();" type="reset" value=
                         "Clear"><br></td>
                     </tr>
@@ -232,7 +235,7 @@
                         <td align="center">
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td height="24">01:&nbsp;</td>
+                                    <td>01:</td>
 
                                     <td><input maxlength="4" name="Out01"
                                     onblur=
@@ -245,7 +248,7 @@
 
 
                                 <tr>
-                                    <td height="24">02:&nbsp;</td>
+                                    <td>02:</td>
 
                                     <td><input maxlength="4" name="Out02"
                                     onblur=
@@ -258,7 +261,7 @@
 
 
                                 <tr>
-                                    <td height="24">03:&nbsp;</td>
+                                    <td>03:</td>
 
                                     <td><input maxlength="4" name="Out03"
                                     onblur=
@@ -271,7 +274,7 @@
 
 
                                 <tr>
-                                    <td height="24">04:&nbsp;</td>
+                                    <td>04:</td>
 
                                     <td><input maxlength="4" name="Out04"
                                     onblur=
@@ -284,7 +287,7 @@
 
 
                                 <tr>
-                                    <td height="24">05:&nbsp;</td>
+                                    <td>05:</td>
 
                                     <td><input maxlength="4" name="Out05"
                                     onblur=
@@ -297,7 +300,7 @@
 
 
                                 <tr>
-                                    <td height="24">06:&nbsp;</td>
+                                    <td>06:</td>
 
                                     <td><input maxlength="4" name="Out06"
                                     onblur=
@@ -310,7 +313,7 @@
 
 
                                 <tr>
-                                    <td height="24">07:&nbsp;</td>
+                                    <td>07:</td>
 
                                     <td><input maxlength="4" name="Out07"
                                     onblur=
@@ -323,7 +326,7 @@
 
 
                                 <tr>
-                                    <td height="24">08:&nbsp;</td>
+                                    <td>08:</td>
 
                                     <td><input maxlength="4" name="Out08"
                                     onblur=
@@ -336,7 +339,7 @@
 
 
                                 <tr>
-                                    <td height="24">09:&nbsp;</td>
+                                    <td>09:</td>
 
                                     <td><input maxlength="4" name="Out09"
                                     onblur=
@@ -349,7 +352,7 @@
 
 
                                 <tr>
-                                    <td height="24">10:&nbsp;</td>
+                                    <td>10:</td>
 
                                     <td><input maxlength="4" name="Out10"
                                     onblur=
@@ -362,7 +365,7 @@
 
 
                                 <tr>
-                                    <td height="24">11:&nbsp;</td>
+                                    <td>11:</td>
 
                                     <td><input maxlength="4" name="Out11"
                                     onblur=
@@ -375,7 +378,7 @@
 
 
                                 <tr>
-                                    <td height="24">12:&nbsp;</td>
+                                    <td>12:</td>
 
                                     <td><input maxlength="4" name="Out12"
                                     onblur=
@@ -388,7 +391,7 @@
 
 
                                 <tr>
-                                    <td height="24">13:&nbsp;</td>
+                                    <td>13:</td>
 
                                     <td><input maxlength="4" name="Out13"
                                     onblur=
@@ -401,7 +404,7 @@
 
 
                                 <tr>
-                                    <td height="24">14:&nbsp;</td>
+                                    <td>14:</td>
 
                                     <td><input maxlength="4" name="Out14"
                                     onblur=
@@ -414,7 +417,7 @@
 
 
                                 <tr>
-                                    <td height="24">15:&nbsp;</td>
+                                    <td>15:</td>
 
                                     <td><input maxlength="4" name="Out15"
                                     onblur=
@@ -431,24 +434,20 @@
             </form>
         </div>
 
-
-        <div id="rightContainer">
-            <!--Memory-->
-
-
+		<!--Memory-->
+        <div id="memoryContainer">
             <form id="Memory" name="Memory">
                 <table cellpadding="5" cellspacing="0">
                     <tr>
                         <td align="center">
-                        <b>Memory</b>&nbsp;&nbsp;<input type="reset" value=
+                        <font size=4><b>Memory</b></font>&nbsp;<input type="reset" value=
                         "Clear"></td>
                     </tr>
-
 
                     <tr>
                         <td>
                             <table border="0" cellpadding="0" cellspacing="0"
-                            width="440">
+                            width="500">
                                 <tr>
                                     <td align="center">
                                         <table border="0" cellpadding="0"

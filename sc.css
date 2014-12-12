@@ -20,21 +20,31 @@ html, input {
 
 #CPU
 {
+	padding: 1%;
 	text-align: center;
 }
 
-#rightContainer
+#registers
 {
+	padding: 1%;
 }
 
 #inputCard
 {
     float: left;
+	padding: 12% 0%;
 }
 
 #outputCard
 {
     float: right;
+	padding: 12% 0%;
+}
+
+#memoryContainer
+{
+	text-align: center;
+    margin: 0 150px;
 }
 
 table
