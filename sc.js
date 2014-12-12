@@ -48,12 +48,16 @@ function fetch(){
 	PC = document.CPU.PC.value;
 	// Increment Program Counter
 	PC++;
-	// Update the PC input box in index.html
-	document.CPU.PC.value = 
 	// Convert PC to a string, if length is less than 1 (ie. PC < 10), add "0" to the front
-	(PC.toString().length==1? "0"+PC:
+	if(PC.toString().length==1)
+	{
+		// Update the PC input box in index.html
+		document.CPU.PC.value = "0"+PC;
 	// Else PC is greater than 10 so simply convert to string
-	PC.toString());
+	}else{
+		// Update the PC input box in index.html
+		document.CPU.PC.value = PC.toString();
+	}
 	return 0;
 };
 
@@ -102,7 +106,12 @@ function INP(operand){
 	};
 	document.Memory["M"+operand].value = temp;
 	inCardNo++;
-	inCardNo = (inCardNo.toString().length==1? "0"+inCardNo: inCardNo.toString());
+	// Pad the input value if it is only 1 character
+	if(inCardNo.toString().length==1){
+		inCardNo = "0"+inCardNo;
+	}else{
+		inCardNo = inCardNo.toString();
+	}
 	return 0;
 };
 
@@ -114,7 +123,7 @@ Function Output:
 function OUT(operand){
 	document.Output["Out"+outCardNo].value = document.Memory["M"+operand].value;
 	outCardNo++;
-	// Format if the value to be outputted is only 1 character
+	// Pad the output value if it is only 1 character
 	if(outCardNo.toString().length==1){
 		outCardNo = "0"+outCardNo;
 	}
@@ -250,7 +259,7 @@ function SHF(XY){
 		var ac1;
 		var ac2;
 		var ac3;
-		var magnitude;
+		var mag;
 		var sign;
 		
 		if(x!=0){
@@ -271,8 +280,8 @@ function SHF(XY){
 				ac2 = '0';
 			};
 			ac3 = '0';
-			magnitude = ac1 + ac2 + ac3;
-			document.CPU.AC.value = document.CPU.AC.value.charAt(0) + magnitude;
+			mag = ac1 + ac2 + ac3;
+			document.CPU.AC.value = document.CPU.AC.value.charAt(0) + mag;
 		};
 		if(y!=0){
 			index = 3-y;
@@ -296,15 +305,15 @@ function SHF(XY){
 				ac1 = '0';
 			};
 			document.CPU.CARRY.value = '0';
-			magnitude = ac1 + ac2 + ac3;
+			mag = ac1 + ac2 + ac3;
 		};
-		if (magnitude == '000'){
+		if (mag == '000'){
 			sign = ' ';
 		}else{
 			sign = document.CPU.AC.value.charAt(0);
 		}
 		// Update AC value
-		document.CPU.AC.value = sign + magnitude;
+		document.CPU.AC.value = sign + mag;
 	};
 	return 0;
 };
