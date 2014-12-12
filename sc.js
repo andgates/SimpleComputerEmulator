@@ -1,8 +1,14 @@
+/**************************************************************************************************
+
+							Logic of the Simple Computer Emulator
+										(sc.js)
+
+**************************************************************************************************/
+
 
 /* 
 Function Boot: 
-	Called on page load to initialize Program Counter, input cards, output cards,
-	and highlight images.
+	Called on page load to initialize Program Counter, input cards, and output cards.
 */
 function boot(){
 	document.CPU.PC.value='00';
@@ -15,7 +21,7 @@ Function Cycle:
 	The main CPU cycle, consisting of fetch(), decode(), and execute()
 	Parameters:
 		N: The number of memory cells to cycle through. If the user presses step, N = 1.
-			If the user presses Run, N = 100.
+			If the user presses run, N = 100.
 */
 function cycle(N){
 	for (i=1; i<=N; i++){
@@ -38,6 +44,10 @@ function fetch(){
 		alert('Error: Memory cell being fetched is empty.');
 		return 1;
 	};
+	if (IR==000) {
+		alert('Who do you think you are? Trying to overide cell 00? Program terminated.');
+		return 1;
+	}
 	if (IR<=0) {
 		alert('Error: Memory cell being fetched is less than zero.');
 		return 1;
@@ -77,18 +87,28 @@ function decode(){
 /* 
 Function Execute: 
 	With fetch() and decode() completed, execute() simply matches the opCode
-	to the correct machine language code.
+	to the correct machine language code and calls the appropriate helper function.
 */
 function execute(){
+	// 0 opCode: Input
 	if(opCode=="0"){return INP(operand);};
+	// 1 opCode: Output
 	if(opCode=="1"){return OUT(operand);};
+	// 2 opCode: Add
 	if(opCode=="2"){return ADD(operand);};
+	// 3 opCode: Subtract
 	if(opCode=="3"){return SUB(operand);};
+	// 4 opCode: Load Accumulator
 	if(opCode=="4"){return LDA(operand);};
+	// 5 opCode: Store Accumulator
 	if(opCode=="5"){return STA(operand);};
+	// 6 opCode: Jump
 	if(opCode=="6"){return JMP(operand);};
+	// 7 opCode: Test Accumulator
 	if(opCode=="7"){return TAC(operand);};
+	// 8 opCode: Shift Accumulator
 	if(opCode=="8"){return SHF(operand);};
+	// 9 opCode: Halt
 	if(opCode=="9"){return HLT(operand);};
 	return 1;
 };
@@ -99,7 +119,8 @@ Function Input:
 	The input function is called when opCode = 0.
 */
 function INP(operand){
-	temp = document.Input["I"+inCardNo].value;
+	// Get the next input card
+	var temp = document.Input["I"+inCardNo].value;
 	if (temp.length <4) {
 		alert('Erorr: Input card is empty. Try clearing input to reset.');
 		return 1;
@@ -254,6 +275,7 @@ function SHF(XY){
 	// Second digit of operand is y
 	var y = XY.charAt(1);
 	
+	// If either x or y is nonzero
 	if(x!=0 || y!=0){
 		var index;
 		var ac1;
@@ -324,15 +346,19 @@ Function Halt:
 	The HLT function is called when opCode = 9.
 */
 function HLT(operand){
+	// If 900 was used, PC will be set to 00. Any cell number may be used as an operand in HLT
 	document.CPU.PC.value = operand;
+	// Reset the input upon successful halt
 	resetInput();
+	// Alert the user
 	alert('Succesful Halt!');
 	return 1;
 };
 
 /* 
 Function Format:
-	Formats any given value (memory, input, AC, IC, or other) to make processing simpler
+	Formats a give value (memory, input, AC, IC, or other) to make processing simpler
+	and to pre-error check user input
 */
 function format(value){
 	// Remove spaces
@@ -344,11 +370,15 @@ function format(value){
 	} else {
 		return '';
 	};
+	
+	// Loop through the value for erroneous characters
 	for (i=0; i<value.length; i++){
 		if(((value.charAt(i)!='-') || i!=0) && ((value.charAt(i) >'9') || (value.charAt(i) <'0'))){
 			temp = temp.split(value.charAt(i)).join('0');
 		};
 	};
+	
+	// Check the length of the value. Pad if necessary.
 	if(temp.length<4){
 		if(temp.charAt(0)=='-'){
 			temp = temp.substring(1,temp.length);
@@ -370,6 +400,7 @@ function format(value){
 			};
 		};
 	} else {
+		// If the user types '-' in an input box, fill the input box with the last value used
 		if(temp.charAt(0)=='-'){
 			formattedvalue = temp;
 		} else {
@@ -379,6 +410,10 @@ function format(value){
 	return formattedvalue;
 };
 
+/* 
+Function formatPC:
+	Special formatting for the two digit value of the program counter
+*/
 function formatPC(value){
 	if(value.length >0){
 		if(value.length<2) value = "0" + value;
@@ -390,15 +425,26 @@ function formatPC(value){
 	return value;
 };
 
+/* 
+Function resetInput:
+	Used when input is cleared or the program successfully halts.
+*/
 function resetInput(){
 	inCardNo='01';
 };
 
+/* 
+Function clearOutput
+*/
 function clearOutput(){
 	outCardNo='01';
 };
 
-function clearAll(){
+/* 
+Function resetSC
+	Completely resets the Simple Computer. Equivalent to a page refresh.
+*/
+function resetSC(){
 	document.CPU.reset();
 	document.Memory.reset();
 	resetInput();
