@@ -58,6 +58,7 @@ function fetch(){
 };
 
 function decode(){
+	// Separate opCode (equivalent to opCode = IR % 100
 	opCode = IR.charAt(1);
 	operand = IR.substring(2,4);
 	return 0;
