@@ -1,7 +1,7 @@
 SimpleComputerProject
 =====================
 
-Creating a Simple Computer Emulator was the CS3A (Computer Organization and Assembly Langauge) first semester Final Project.
+Creating a Simple Computer Emulator was the CS3A (Computer Organization and Assembly Langauge) first semester Final Project at Saddleback College in Fall 2014.
 
 #Simple Computer Emulator: The User Manual
  
