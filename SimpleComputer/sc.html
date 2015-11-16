@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Michael Gates" name="Author">
+    <meta content="Simple Computer Emulator in JavaScript" name="Description">
+
+    <title>Simple Computer Emulator</title>
+    <script src="FileSaver.js" type="text/javascript"></script>
+    <script src="sc.js" type="text/javascript"></script>
+	<script src="scFileFunction.js" type="text/javascript"></script>
+    <link href="sc.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onload="boot();">
+    <!--Main Container-->
+    <div id="container">
+        <div id="header">
+            <h2>Simple Computer Emulator</h2>
+            <input onclick="save();" type="button" value="Save Program">
+            <input onclick="manual();" type="button" value="User Manual">
+			<input onclick="resetSC();" type="button" value="Reset Emulator">
+			<input onclick="fileLoader();" type="button" value="Load Program">
+        </div>
+
+        <div id="CPU">
+            <form id="CPU" name="CPU">
+				
+                <font size=4><b>Central Processing Unit</b></font>
+				
+                <input type="reset" value="Clear CPU">
+				<div id="registers">
+                <b>AC:</b><input maxlength="1" name="CARRY" onblur=
+                "document.CPU.CARRY.value=assignedValue;" onfocus=
+                "assignedValue=document.CPU.CARRY.value;" size="1" type=
+                "text"><input maxlength="4" name="AC" onblur=
+                "document.CPU.AC.value=assignedValue;" onfocus=
+                "assignedValue=document.CPU.AC.value;" size="4" type="text">
+                <b>IR:</b><input maxlength="4" name="IR" onblur=
+                "document.CPU.IR.value=assignedValue;" onfocus=
+                "assignedValue=document.CPU.IR.value;" size="4" type="text">
+                <b>PC:</b><input maxlength="2" name="PC" onblur=
+                "document.CPU.PC.value=formatPC(document.CPU.PC.value);" size=
+                "2" type="text" value="00"> 
+				<input onclick="cycle(1)" type=
+                "button" value="Step">
+				<input onclick="cycle(100)" type="button"
+                value="Execute">
+				</div>
+            </form>
+        </div>
+        
+
+		<!--Input Cards-->
+        <div id="inputCard">
+            <form id="Input" name="Input">
+			<table cellpadding="5" cellspacing="0">
+                    <tr>
+                        <td align="center"><font size=4><b>Input Cards</b></font><br><br>
+                         <input onclick="resetInput();" type="reset" value="Clear"><br></td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>01:</td>
+
+                        <td><input maxlength="4" name="I01" onblur=
+                        "document.Input.I01.value=format(document.Input.I01.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>02:</td>
+
+                        <td><input maxlength="4" name="I02" onblur=
+                        "document.Input.I02.value=format(document.Input.I02.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>03:</td>
+
+                        <td><input maxlength="4" name="I03" onblur=
+                        "document.Input.I03.value=format(document.Input.I03.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>04:</td>
+
+                        <td><input maxlength="4" name="I04" onblur=
+                        "document.Input.I04.value=format(document.Input.I04.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>05:</td>
+
+                        <td><input maxlength="4" name="I05" onblur=
+                        "document.Input.I05.value=format(document.Input.I05.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>06:</td>
+
+                        <td><input maxlength="4" name="I06" onblur=
+                        "document.Input.I06.value=format(document.Input.I06.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>07:</td>
+
+                        <td><input maxlength="4" name="I07" onblur=
+                        "document.Input.I07.value=format(document.Input.I07.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>08:</td>
+
+                        <td><input maxlength="4" name="I08" onblur=
+                        "document.Input.I08.value=format(document.Input.I08.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>09:</td>
+
+                        <td><input maxlength="4" name="I09" onblur=
+                        "document.Input.I09.value=format(document.Input.I09.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>10:</td>
+
+                        <td><input maxlength="4" name="I10" onblur=
+                        "document.Input.I10.value=format(document.Input.I10.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>11:</td>
+
+                        <td><input maxlength="4" name="I11" onblur=
+                        "document.Input.I11.value=format(document.Input.I11.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>12:</td>
+
+                        <td><input maxlength="4" name="I12" onblur=
+                        "document.Input.I12.value=format(document.Input.I12.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>13:</td>
+
+                        <td><input maxlength="4" name="I13" onblur=
+                        "document.Input.I13.value=format(document.Input.I13.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>14:</td>
+
+                        <td><input maxlength="4" name="I14" onblur=
+                        "document.Input.I14.value=format(document.Input.I14.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>15:</td>
+
+                        <td><input maxlength="4" name="I15" onblur=
+                        "document.Input.I15.value=format(document.Input.I15.value);"
+                        size="4" type="text">
+                        </td>
+                    </tr>
+                </table>
+           </td>
+		   
+
+					</tr>
+			</table>
+			</form>
+        </div>
+
+		<!--Output Cards-->
+        <div id="outputCard">
+            <form id="Output" name="Output">
+                <table cellpadding="5" cellspacing="0">
+                    <tr>
+                        <td align="center"><font size=4><b>Output Cards</b></font><br><br>
+                        <input onclick="clearOutput();" type="reset" value=
+                        "Clear"><br></td>
+                    </tr>
+
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td>01:</td>
+
+                                    <td><input maxlength="4" name="Out01"
+                                    onblur=
+                                    "document.Output.Out01.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out01.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>02:</td>
+
+                                    <td><input maxlength="4" name="Out02"
+                                    onblur=
+                                    "document.Output.Out02.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out02.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>03:</td>
+
+                                    <td><input maxlength="4" name="Out03"
+                                    onblur=
+                                    "document.Output.Out03.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out03.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>04:</td>
+
+                                    <td><input maxlength="4" name="Out04"
+                                    onblur=
+                                    "document.Output.Out04.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out04.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>05:</td>
+
+                                    <td><input maxlength="4" name="Out05"
+                                    onblur=
+                                    "document.Output.Out05.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out05.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>06:</td>
+
+                                    <td><input maxlength="4" name="Out06"
+                                    onblur=
+                                    "document.Output.Out06.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out06.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>07:</td>
+
+                                    <td><input maxlength="4" name="Out07"
+                                    onblur=
+                                    "document.Output.Out07.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out07.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>08:</td>
+
+                                    <td><input maxlength="4" name="Out08"
+                                    onblur=
+                                    "document.Output.Out08.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out08.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>09:</td>
+
+                                    <td><input maxlength="4" name="Out09"
+                                    onblur=
+                                    "document.Output.Out09.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out09.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>10:</td>
+
+                                    <td><input maxlength="4" name="Out10"
+                                    onblur=
+                                    "document.Output.Out10.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out10.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>11:</td>
+
+                                    <td><input maxlength="4" name="Out11"
+                                    onblur=
+                                    "document.Output.Out11.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out11.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>12:</td>
+
+                                    <td><input maxlength="4" name="Out12"
+                                    onblur=
+                                    "document.Output.Out12.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out12.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>13:</td>
+
+                                    <td><input maxlength="4" name="Out13"
+                                    onblur=
+                                    "document.Output.Out13.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out13.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>14:</td>
+
+                                    <td><input maxlength="4" name="Out14"
+                                    onblur=
+                                    "document.Output.Out14.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out14.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>15:</td>
+
+                                    <td><input maxlength="4" name="Out15"
+                                    onblur=
+                                    "document.Output.Out15.value=assignedValue;"
+                                    onfocus=
+                                    "assignedValue=document.Output.Out15.value;"
+                                    size="4" type="text">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+		<!--Memory-->
+        <div id="memoryContainer">
+            <form id="Memory" name="Memory">
+                <table cellpadding="5" cellspacing="0">
+                    <tr>
+                        <td align="center">
+                        <font size=4><b>Memory</b></font>&nbsp;<input type="reset" value=
+                        "Clear"></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0"
+                            width="500">
+                                <tr>
+                                    <td align="center">
+                                        <table border="0" cellpadding="0"
+                                        cellspacing="0">
+                                            <tr>
+                                                <td>00:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M00" onblur=
+                                                "document.Memory.M00.value=document.Memory.M00.defaultValue;"
+                                                size="4" type="text" value=
+                                                " 001">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>01:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M01" onblur=
+                                                "document.Memory.M01.value=format(document.Memory.M01.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>02:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M02" onblur=
+                                                "document.Memory.M02.value=format(document.Memory.M02.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>03:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M03" onblur=
+                                                "document.Memory.M03.value=format(document.Memory.M03.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>04:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M04" onblur=
+                                                "document.Memory.M04.value=format(document.Memory.M04.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>05:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M05" onblur=
+                                                "document.Memory.M05.value=format(document.Memory.M05.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>06:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M06" onblur=
+                                                "document.Memory.M06.value=format(document.Memory.M06.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>07:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M07" onblur=
+                                                "document.Memory.M07.value=format(document.Memory.M07.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>08:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M08" onblur=
+                                                "document.Memory.M08.value=format(document.Memory.M08.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>09:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M09" onblur=
+                                                "document.Memory.M09.value=format(document.Memory.M09.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>10:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M10" onblur=
+                                                "document.Memory.M10.value=format(document.Memory.M10.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>11:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M11" onblur=
+                                                "document.Memory.M11.value=format(document.Memory.M11.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>12:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M12" onblur=
+                                                "document.Memory.M12.value=format(document.Memory.M12.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>13:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M13" onblur=
+                                                "document.Memory.M13.value=format(document.Memory.M13.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>14:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M14" onblur=
+                                                "document.Memory.M14.value=format(document.Memory.M14.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>15:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M15" onblur=
+                                                "document.Memory.M15.value=format(document.Memory.M15.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>16:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M16" onblur=
+                                                "document.Memory.M16.value=format(document.Memory.M16.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>17:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M17" onblur=
+                                                "document.Memory.M17.value=format(document.Memory.M17.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>18:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M18" onblur=
+                                                "document.Memory.M18.value=format(document.Memory.M18.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>19:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M19" onblur=
+                                                "document.Memory.M19.value=format(document.Memory.M19.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td align="center">
+                                        <table border="0" cellpadding="0"
+                                        cellspacing="0">
+                                            <tr>
+                                                <td>20:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M20" onblur=
+                                                "document.Memory.M20.value=format(document.Memory.M20.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>21:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M21" onblur=
+                                                "document.Memory.M21.value=format(document.Memory.M21.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>22:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M22" onblur=
+                                                "document.Memory.M22.value=format(document.Memory.M22.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>23:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M23" onblur=
+                                                "document.Memory.M23.value=format(document.Memory.M23.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>24:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M24" onblur=
+                                                "document.Memory.M24.value=format(document.Memory.M24.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>25:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M25" onblur=
+                                                "document.Memory.M25.value=format(document.Memory.M25.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>26:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M26" onblur=
+                                                "document.Memory.M26.value=format(document.Memory.M26.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>27:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M27" onblur=
+                                                "document.Memory.M27.value=format(document.Memory.M27.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>28:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M28" onblur=
+                                                "document.Memory.M28.value=format(document.Memory.M28.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>29:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M29" onblur=
+                                                "document.Memory.M29.value=format(document.Memory.M29.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>30:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M30" onblur=
+                                                "document.Memory.M30.value=format(document.Memory.M30.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>31:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M31" onblur=
+                                                "document.Memory.M31.value=format(document.Memory.M31.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>32:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M32" onblur=
+                                                "document.Memory.M32.value=format(document.Memory.M32.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>33:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M33" onblur=
+                                                "document.Memory.M33.value=format(document.Memory.M33.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>34:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M34" onblur=
+                                                "document.Memory.M34.value=format(document.Memory.M34.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>35:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M35" onblur=
+                                                "document.Memory.M35.value=format(document.Memory.M35.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>36:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M36" onblur=
+                                                "document.Memory.M36.value=format(document.Memory.M36.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>37:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M37" onblur=
+                                                "document.Memory.M37.value=format(document.Memory.M37.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>38:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M38" onblur=
+                                                "document.Memory.M38.value=format(document.Memory.M38.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>39:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M39" onblur=
+                                                "document.Memory.M39.value=format(document.Memory.M39.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td align="center">
+                                        <table border="0" cellpadding="0"
+                                        cellspacing="0">
+                                            <tr>
+                                                <td>40:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M40" onblur=
+                                                "document.Memory.M40.value=format(document.Memory.M40.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>41:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M41" onblur=
+                                                "document.Memory.M41.value=format(document.Memory.M41.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>42:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M42" onblur=
+                                                "document.Memory.M42.value=format(document.Memory.M42.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>43:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M43" onblur=
+                                                "document.Memory.M43.value=format(document.Memory.M43.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>44:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M44" onblur=
+                                                "document.Memory.M44.value=format(document.Memory.M44.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>45:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M45" onblur=
+                                                "document.Memory.M45.value=format(document.Memory.M45.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>46:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M46" onblur=
+                                                "document.Memory.M46.value=format(document.Memory.M46.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>47:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M47" onblur=
+                                                "document.Memory.M47.value=format(document.Memory.M47.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>48:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M48" onblur=
+                                                "document.Memory.M48.value=format(document.Memory.M48.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>49:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M49" onblur=
+                                                "document.Memory.M49.value=format(document.Memory.M49.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>50:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M50" onblur=
+                                                "document.Memory.M50.value=format(document.Memory.M50.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>51:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M51" onblur=
+                                                "document.Memory.M51.value=format(document.Memory.M51.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>52:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M52" onblur=
+                                                "document.Memory.M52.value=format(document.Memory.M52.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>53:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M53" onblur=
+                                                "document.Memory.M53.value=format(document.Memory.M53.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>54:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M54" onblur=
+                                                "document.Memory.M54.value=format(document.Memory.M54.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>55:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M55" onblur=
+                                                "document.Memory.M55.value=format(document.Memory.M55.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>56:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M56" onblur=
+                                                "document.Memory.M56.value=format(document.Memory.M56.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>57:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M57" onblur=
+                                                "document.Memory.M57.value=format(document.Memory.M57.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>58:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M58" onblur=
+                                                "document.Memory.M58.value=format(document.Memory.M58.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>59:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M59" onblur=
+                                                "document.Memory.M59.value=format(document.Memory.M59.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td align="center">
+                                        <table border="0" cellpadding="0"
+                                        cellspacing="0">
+                                            <tr>
+                                                <td>60:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M60" onblur=
+                                                "document.Memory.M60.value=format(document.Memory.M60.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>61:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M61" onblur=
+                                                "document.Memory.M61.value=format(document.Memory.M61.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>62:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M62" onblur=
+                                                "document.Memory.M62.value=format(document.Memory.M62.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>63:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M63" onblur=
+                                                "document.Memory.M63.value=format(document.Memory.M63.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>64:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M64" onblur=
+                                                "document.Memory.M64.value=format(document.Memory.M64.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>65:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M65" onblur=
+                                                "document.Memory.M65.value=format(document.Memory.M65.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>66:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M66" onblur=
+                                                "document.Memory.M66.value=format(document.Memory.M66.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>67:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M67" onblur=
+                                                "document.Memory.M67.value=format(document.Memory.M67.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>68:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M68" onblur=
+                                                "document.Memory.M68.value=format(document.Memory.M68.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>69:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M69" onblur=
+                                                "document.Memory.M69.value=format(document.Memory.M69.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>70:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M70" onblur=
+                                                "document.Memory.M70.value=format(document.Memory.M70.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>71:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M71" onblur=
+                                                "document.Memory.M71.value=format(document.Memory.M71.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>72:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M72" onblur=
+                                                "document.Memory.M72.value=format(document.Memory.M72.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>73:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M73" onblur=
+                                                "document.Memory.M73.value=format(document.Memory.M73.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>74:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M74" onblur=
+                                                "document.Memory.M74.value=format(document.Memory.M74.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>75:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M75" onblur=
+                                                "document.Memory.M75.value=format(document.Memory.M75.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>76:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M76" onblur=
+                                                "document.Memory.M76.value=format(document.Memory.M76.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>77:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M77" onblur=
+                                                "document.Memory.M77.value=format(document.Memory.M77.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>78:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M78" onblur=
+                                                "document.Memory.M78.value=format(document.Memory.M78.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>79:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M79" onblur=
+                                                "document.Memory.M79.value=format(document.Memory.M79.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td align="center">
+                                        <table border="0" cellpadding="0"
+                                        cellspacing="0">
+                                            <tr>
+                                                <td>80:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M80" onblur=
+                                                "document.Memory.M80.value=format(document.Memory.M80.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>81:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M81" onblur=
+                                                "document.Memory.M81.value=format(document.Memory.M81.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>82:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M82" onblur=
+                                                "document.Memory.M82.value=format(document.Memory.M82.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>83:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M83" onblur=
+                                                "document.Memory.M83.value=format(document.Memory.M83.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>84:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M84" onblur=
+                                                "document.Memory.M84.value=format(document.Memory.M84.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>85:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M85" onblur=
+                                                "document.Memory.M85.value=format(document.Memory.M85.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>86:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M86" onblur=
+                                                "document.Memory.M86.value=format(document.Memory.M86.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>87:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M87" onblur=
+                                                "document.Memory.M87.value=format(document.Memory.M87.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>88:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M88" onblur=
+                                                "document.Memory.M88.value=format(document.Memory.M88.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>89:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M89" onblur=
+                                                "document.Memory.M89.value=format(document.Memory.M89.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>90:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M90" onblur=
+                                                "document.Memory.M90.value=format(document.Memory.M90.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>91:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M91" onblur=
+                                                "document.Memory.M91.value=format(document.Memory.M91.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>92:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M92" onblur=
+                                                "document.Memory.M92.value=format(document.Memory.M92.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>93:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M93" onblur=
+                                                "document.Memory.M93.value=format(document.Memory.M93.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>94:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M94" onblur=
+                                                "document.Memory.M94.value=format(document.Memory.M94.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>95:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M95" onblur=
+                                                "document.Memory.M95.value=format(document.Memory.M95.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>96:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M96" onblur=
+                                                "document.Memory.M96.value=format(document.Memory.M96.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>97:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M97" onblur=
+                                                "document.Memory.M97.value=format(document.Memory.M97.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>98:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M98" onblur=
+                                                "document.Memory.M98.value=format(document.Memory.M98.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>99:</td>
+
+                                                <td><input maxlength="4" name=
+                                                "M99" onblur=
+                                                "document.Memory.M99.value=format(document.Memory.M99.value);"
+                                                size="4" type="text">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

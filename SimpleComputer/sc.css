@@ -1,0 +1,54 @@
+
+
+html, input 
+{
+	font-family: monospace;
+}
+
+#container
+{
+    min-width: 820px;
+    min-height: 600px;
+    max-width: 820px;
+    max-height: 700px;
+    margin: 0px auto;
+}
+
+#header
+{
+    text-align: center;
+}
+
+#CPU
+{
+	padding: 1%;
+	text-align: center;
+}
+
+#registers
+{
+	padding: 1%;
+}
+
+#inputCard
+{
+    float: left;
+	padding: 12% 0%;
+}
+
+#outputCard
+{
+    float: right;
+	padding: 12% 0%;
+}
+
+#memoryContainer
+{
+	text-align: center;
+    margin: 0 150px;
+}
+
+table
+{
+	border-collapse: collapse;
+}
